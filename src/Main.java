@@ -2,9 +2,14 @@
  * Created by samuel on 24/11/16.
  */
 
-    void main(){
+    public class Main{
 
+        public static void main(String[]rgs){
 
-            }
+            System.out.println("Teste");
+
+        }
+
+    }
 
 
