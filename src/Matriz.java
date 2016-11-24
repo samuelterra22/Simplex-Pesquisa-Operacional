@@ -47,4 +47,13 @@ public class Matriz {
         return A;
     }
 
+    // imprime matriz no formato padrao
+    public void show() {
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++)
+                System.out.printf("%9.4f ", matriz[i][j]);
+            System.out.println();
+        }
+    }
+
 }
