@@ -24,7 +24,9 @@ public class Matrix {
     }
 
     // copy constructor
-    private Matrix(Matrix A) { this(A.data); }
+    private Matrix(Matrix A) {
+        this(A.data);
+    }
 
     // create and return a random M-by-N matrix with values between 0 and 1
     public static Matrix random(int M, int N) {
@@ -135,7 +137,7 @@ public class Matrix {
             // pivot within A
             for (int j = i + 1; j < N; j++) {
                 double m = A.data[j][i] / A.data[i][i];
-                for (int k = i+1; k < N; k++) {
+                for (int k = i + 1; k < N; k++) {
                     A.data[j][k] -= A.data[i][k] * m;
                 }
                 A.data[j][i] = 0.0;
@@ -164,5 +166,4 @@ public class Matrix {
     }
 
 
-
-
+}
