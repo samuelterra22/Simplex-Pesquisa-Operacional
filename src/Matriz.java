@@ -49,6 +49,15 @@ public class Matriz {
         return C;
     }
 
+    // A = B ?
+    public boolean igual(Matriz B) {
+        Matriz A = this;
+        if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
+        for (int i = 0; i < L; i++)
+            for (int j = 0; j < C; j++)
+                if (A.matriz[i][j] != B.matriz[i][j]) return false;
+        return true;
+    }
 
     // return C = A - B
     public Matriz menos(Matriz B) {
