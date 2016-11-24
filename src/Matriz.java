@@ -91,61 +91,6 @@ public class Matriz {
         return A;
     }
 
-    // retornar x = A^-1 b, assumindo que A é quadrada e tem o rank completo
-    public Matriz solve(Matriz rhs) {
-        if (L != C || rhs.L != C || rhs.C != 1)
-            throw new RuntimeException("Dimensoes de matriz ilegais.");
-
-        // cria copia dos dados
-        Matriz A = new Matriz(this);
-        Matriz b = new Matriz(rhs);
-
-        // eliminacao Gaussiana com "partial pivoting"
-        for (int i = 0; i < L; i++) {
-
-            // encontra linha pivo e trocar
-            int max = i;
-            for (int j = i + 1; j < L; j++)
-                if (Math.abs(A.matriz[j][i]) > Math.abs(A.matriz[max][i]))
-                    max = j;
-            A.swap(i, max);
-            b.swap(i, max);
-
-            // singular (matriz singular nao possui inversa)
-            if (A.matriz[i][i] == 0.0) throw new RuntimeException("Matriz he singular. Nao possui inversa.");
-
-            // pivo dentro de b
-            for (int j = i + 1; j < C; j++)
-                b.matriz[j][0] -= b.matriz[i][0] * A.matriz[j][i] / A.matriz[i][i];
-
-            // pivo dentro de A
-            for (int j = i + 1; j < C; j++) {
-                double m = A.matriz[j][i] / A.matriz[i][i];
-                for (int k = i + 1; k < C; k++) {
-                    A.matriz[j][k] -= A.matriz[i][k] * m;
-                }
-                A.matriz[j][i] = 0.0;
-            }
-        }
-
-        // substituicao
-        Matriz x = new Matriz(C, 1);
-        for (int j = C - 1; j >= 0; j--) {
-            double t = 0.0;
-            for (int k = j + 1; k < C; k++)
-                t += A.matriz[j][k] * x.matriz[k][0];
-            x.matriz[j][0] = (b.matriz[j][0] - t) / A.matriz[j][j];
-        }
-        return x;
-
-    }
-
-    // trocas as linhas i e j
-    private void swap(int i, int j) {
-        double[] temp = matriz[i];
-        matriz[i] = matriz[j];
-        matriz[j] = temp;
-    }
 
     // imprime matriz no formato padrao
     public void show() {
