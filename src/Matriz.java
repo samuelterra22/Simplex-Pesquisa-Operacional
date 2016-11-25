@@ -2,6 +2,20 @@
  * Created by samuel on 24/11/16.
  */
 
+
+/*
+ METODOS QUE AINDA DEVEM SER CRIADOS:
+
+    OK  (a) Multiplicacao de escalar por matriz
+        (b) Produto escalar (apenas para vetores linha ou coluna)
+    OK  (c) Produto matricial (considerando a compatibilidade das linhas e colunas)
+    OK  (d) Calculo da transposta da matriz
+        (e) Calculo da matriz inversa por decomposicao LU para calcular o vetor direção
+            factivel d B e para resolver o sistema linear Bx B = b se optar por resolver o sistema por xB = B^−1 b)
+        (f) Outras operacoes que surgirem sob demanda durante a implementacao do Simplex
+
+*/
+
 public class Matriz {
 
     private final int L;                // numero de linhas
@@ -70,7 +84,7 @@ public class Matriz {
         return C;
     }
 
-    // return C = A * B
+    // retorna C = A * B
     public Matriz mult(Matriz B) {
         Matriz A = this;
         if (A.C != B.L) throw new RuntimeException("Dimensoes de matriz ilegais.");
@@ -80,6 +94,18 @@ public class Matriz {
                 for (int k = 0; k < A.C; k++)
                     C.matriz[i][j] += (A.matriz[i][k] * B.matriz[k][j]);
         return C;
+    }
+
+    // multiplica a matriz por um escalar
+    public Matriz multEscalar(double escalar) {
+
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++) {
+                this.matriz[i][j] = this.matriz[i][j] * escalar;
+            }
+        }
+
+        return null;
     }
 
     // cria e retorna a matriz transposta
