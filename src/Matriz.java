@@ -11,6 +11,7 @@ public class Matriz {
 
     private final int[] indicesBase = new int[L];
     private final int[] indicesNaoBase = new int[C-L];
+    private final int[] u = new int[L];
 
     // inicializa uma matriz M por N de zeros
     public Matriz(int L, int C) {
@@ -290,7 +291,7 @@ public class Matriz {
 
 
     /**
-     * Inicia o programa com iteração 0
+     *    Inicia o programa com iteração 0
      */
     public void start() {
         int iteracao = 0;
