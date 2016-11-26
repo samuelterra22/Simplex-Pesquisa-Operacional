@@ -163,7 +163,6 @@ public class Matriz {
         for (int i = 0; i < pivot.length; i++) {
             pivot[i] = i;
         }
-
         for (int j = 0; j < n - 1; j++) {
             // Escolha do pivot
             p = j;
@@ -172,7 +171,6 @@ public class Matriz {
                     p = k;
                 }
             }
-
             if (p != j) {
                 for (int k = 0; k < n; k++) {
                     // Troca das linhas p e j
