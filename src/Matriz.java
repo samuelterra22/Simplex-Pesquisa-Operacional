@@ -4,8 +4,8 @@
 
 public class Matriz {
 
-    private final int L = 9;                // numero de linhas (M)
-    private final int C = 13;                // numero de colunas (N)
+    private final int L;                // numero de linhas (M)
+    private final int C;                // numero de colunas (N)
     private final double[][] matriz;    // vetor M-por-N que representa a matriz
 
 
@@ -198,15 +198,16 @@ public class Matriz {
         Double theta  = Double.POSITIVE_INFINITY;
         int indiceL = -1;
 
-        int L = 9; //linhas     deixa assim por esquanto
+        int L = 9; //linhas     deixa assim por esquanto, dei uma mexida pq senao nao compila
         int C = 13;//colunas
 
         for (int i = 0; i <  L ; i++) {
-            if (u[i] > 0 ){
+            //if (u[i] > 0 ){
 
 
-            }
+            //}
         }
+        return null;
     }
 
     /**
