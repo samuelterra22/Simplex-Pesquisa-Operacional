@@ -143,13 +143,13 @@ public class Matriz {
     public Matriz decomposicaoLU(int n) {
 
         //int n = Math.min(L,C);
-        Matriz A = this.copia();
+        Matriz A = this;
         int pivot[] = new int[n];
         double t, multiplicador;
         int m, p;
 
         // Inicialização ordenada de Pivot
-        for (int i = 0; i < pivot.length; i++) {
+        for (int i = 0; i < n; i++) {
             pivot[i] = i;
         }
         for (int j = 0; j < n - 1; j++) {

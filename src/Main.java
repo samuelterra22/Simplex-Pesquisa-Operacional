@@ -50,8 +50,13 @@ public class Main{
             /* Debug */
 
             double[][] b = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+            double[][] c = {{12, 0, 30}, {5, 10, 6}, {7, 0, 1}};
             Matriz B = new Matriz(b);
-            B.show();
+            Matriz C = new Matriz(c);
 
+            B.show();
+            System.out.println();
+            C.decomposicaoLU(3);             //   <- acho que ta com alguma treta nesse metodo
+            C.show();
         }
     }
