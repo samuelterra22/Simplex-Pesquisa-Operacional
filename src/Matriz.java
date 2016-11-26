@@ -1,3 +1,5 @@
+import java.lang.reflect.ParameterizedType;
+
 /**
  * Created by samuel on 24/11/16.
  */
@@ -6,12 +8,19 @@ public class Matriz {
 
     private final int L = 9;                // numero de linhas (M)
     private final int C = 13;                // numero de colunas (N)
-    private final double[][] matriz;    // vetor M-por-N que representa a matriz
+    private final double[][] matriz;         // vetor M-por-N que representa a matriz
 
+    /**
+     * Variáveis Globais
+     */
+    private static  double[][] BMenosUm = new  double[L][L];
 
-    private final int[] indicesBase = new int[L];
-    private final int[] indicesNaoBase = new int[C-L];
-    private final int[] u = new int[L];
+    private static  double[] indicesBase = new double[L];
+    private static  double[] indicesNaoBase = new double[C-L];
+    private static  double[] u = new double[L];
+
+    private static  int jotaEscolhido = 0;
+
 
     // inicializa uma matriz M por N de zeros
     public Matriz(int L, int C) {
@@ -22,8 +31,6 @@ public class Matriz {
 
     // inicializa uma matriz baseada num vetor recebido por parametro
     public Matriz(double[][] matriz) {
-        L = matriz.length;
-        C = matriz[0].length;
         this.matriz = new double[L][C];
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
@@ -188,13 +195,56 @@ public class Matriz {
         }
         return A;
     }
+
+
+    /**
+     * Multiplicação matriz por vetor
+     *
+     * @author Diego
+     */
+     public static double[] matrixbyVector(double m[][],double v[]){
+
+         double[] produto = new double[m[0].length];
+         double aux =0;
+
+         for (int i = 0; i < L ; i++) {
+             for (int j = 0; j < C; j++) {
+                aux =  m[i][j] * v[j];
+             }
+             produto[i] = aux;
+             aux = 0;
+         }
+       return produto;
+    }
+
+    /**
+     * Multiplicação  vetor por matriz
+     *
+     * @author Diego
+     */
+    public static double[] matrixbyVector(double v[], double m[][]){
+
+        double[] produto = new double[m[0].length];
+        double aux =0;
+
+        for (int i = 0; i < L ; i++) {
+            for (int j = 0; j < C; j++) {
+                aux =  m[i][j] * v[j];
+            }
+            produto[i] = aux;
+            aux = 0;
+        }
+        return produto;
+    }
+
     /**
      * Passo 3: Computa vetor u
      *
-     * @author
+     * @author Diego
      *
      *
      */
+
 
     public boolean computaVetorU() {
 
@@ -202,7 +252,13 @@ public class Matriz {
         // lugar a entrada de uma variável não básica.Computa 'u' para verificar se solucao é ilimitada
 
         // implementa
-        u = BMenosUm %*% matriz[, JotaEscolhido];
+        double aux[] = new double[C];
+
+        for (int i = 0; i < L; i++) {
+            aux[i] = matriz[i][jotaEscolhido];
+        }
+
+        u =  matrixbyVector(BMenosUm,aux);
 
         // Verifica se nenhum componente de u e ' positivo
         boolean existePositivo = false;
@@ -220,7 +276,9 @@ public class Matriz {
             else return true;
 
         }
+        return false;
     }
+
     /**
      * Passo 4 : Determina o valor de Theta
      *
@@ -229,7 +287,7 @@ public class Matriz {
     public double calcTheta(double b[]) {
 
         double theta = Double.POSITIVE_INFINITY;
-        int indiceL = -1;
+        double indiceL = -1;
         double razao = 0;
 
         double[] x = new double[C];
@@ -252,7 +310,7 @@ public class Matriz {
         }
 
         // Exibe variavel que irá deixar a base (apenas debug)
-        System.out.println("\tVariavel  Sai  Base: x[" + indiceL + "], Theta = ", theta, "\n");
+        System.out.println("Variavel  Sai  Base: x[" + indiceL + "], Theta = "+ theta);
         return theta;
 
     }
@@ -265,7 +323,7 @@ public class Matriz {
      */
     public void atualizaVBandNB() {
 
-        double theta = calcTheta();
+        double theta = calcTheta()// implementar
 
         /*Calcula novo valor da nao-basica, e atualiza base8 */
         for (int i = 0; i < L; i++) {
