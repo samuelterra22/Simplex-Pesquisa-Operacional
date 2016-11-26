@@ -192,7 +192,10 @@ public class Matriz {
         int indiceL = -1;
 
         for (int i = 0; i <  L ; i++) {
-            if ()
+            if (u[i] > 0 ){
+
+
+            }
         }
     }
 
