@@ -194,11 +194,12 @@ public class Matriz {
         int indiceL = -1;
 
         for (int i = 0; i <  L ; i++) {
-            if (u[i] > 0 ){
-
-
+            if (i < 10) {
+                //asdasd
             }
         }
+
+        return null;
     }
 
     /**
