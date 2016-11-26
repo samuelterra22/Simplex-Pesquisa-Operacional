@@ -186,7 +186,9 @@ public class Matriz {
         }
         return A;
     }
-
+   /**
+    * @author Diego
+    * */
     public Double calcTheta(int m){
         Double theta  = Double.POSITIVE_INFINITY;
         int indiceL = -1;
