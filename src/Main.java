@@ -21,7 +21,7 @@
 
     REQUISITO 05 - CALCULO DA DIRECAO FACTIVEL
 
-    REQUISITO 06 - CALCULO DE TETA (Diego)
+    REQUISITO 06 - CALCULO DE THETA (Diego)
 
     REQUISTO 07 - MUDANCA DE BASE
 
@@ -33,21 +33,30 @@ public class Main{
 
         public static void main(String[]rgs){
 
-            double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            double[][] a = {
+                    {0, 4, 0.2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0},
+                    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0},
+                    {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1},};
 
             Matriz A = new Matriz(a);
 
-            Matriz B = A.decomposicaoLU(3);
 
-            Matriz C = A.mult(B);
+            /* Debug */
 
-            A.show();
-            System.out.println();
+            double[][] b = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+            double[][] c = {{12, 0, 30}, {5, 10, 6}, {7, 0, 1}};
+            Matriz B = new Matriz(b);
+            Matriz C = new Matriz(c);
+
             B.show();
             System.out.println();
+            C.decomposicaoLU(3);             //   <- acho que ta com alguma treta nesse metodo
             C.show();
-
-
-
         }
     }
