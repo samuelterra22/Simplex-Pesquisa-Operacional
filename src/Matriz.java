@@ -187,19 +187,23 @@ public class Matriz {
         return A;
     }
    /**
+    *
+    * Calcula o valor do Theta
+    *
     * @author Diego
+    *
+    *
     * */
     public Double calcTheta(int m){
         Double theta  = Double.POSITIVE_INFINITY;
         int indiceL = -1;
 
         for (int i = 0; i <  L ; i++) {
-            if (i < 10) {
-                //asdasd
+            if (u[i] > 0 ){
+
+
             }
         }
-
-        return null;
     }
 
     /**
