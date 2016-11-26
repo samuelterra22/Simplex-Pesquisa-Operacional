@@ -130,6 +130,17 @@ public class Matriz {
         return A;
     }
 
+    // cria uma copia
+    public Matriz copia() {
+        Matriz A = new Matriz(L, C);
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++) {
+                A.matriz[i][j] = matriz[i][j];
+            }
+        }
+        return A;
+    }
+
     // imprime matriz no formato padrao
     public void show() {
         for (int i = 0; i < L; i++) {
@@ -142,6 +153,7 @@ public class Matriz {
 
     public Matriz decomposicaoLU(int n) {
 
+        //int n = Math.min(L,C);
         Matriz A = this;
         int pivot[] = new int[n];
         double t, multiplicador;
@@ -154,7 +166,7 @@ public class Matriz {
 
         for (int j = 0; j < n - 1; j++) {
             // Escolha do pivot
-            p = 0;
+            p = j;
             for (int k = j + 1; k < n; ++k) {
                 if (Math.abs(A.matriz[k][j]) > Math.abs(A.matriz[p][j])) {
                     p = k;
@@ -185,8 +197,7 @@ public class Matriz {
                 }
             }
         }
-
-        return null;
+        return A;
     }
 
 }

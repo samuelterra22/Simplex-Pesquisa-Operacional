@@ -5,13 +5,17 @@
 
         public static void main(String[]rgs){
 
-            double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            //double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            //double[][] a = {{5, 7}, {15, 13}};
+            double[][] a = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
-            Matriz ma = new Matriz(a);
+            Matriz A = new Matriz(a);
 
-            ma.multEscalar(3);
+            Matriz B = A.decomposicaoLU(3);
 
-            ma.show();
+            A.show();
+            System.out.println();
+            B.show();
 
         }
     }
