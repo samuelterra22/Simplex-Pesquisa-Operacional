@@ -21,7 +21,7 @@
 
     REQUISITO 05 - CALCULO DA DIRECAO FACTIVEL
 
-    REQUISITO 06 - CALCULO DE TETA (Diego)
+    REQUISITO 06 - CALCULO DE THETA (Diego)
 
     REQUISTO 07 - MUDANCA DE BASE
 
@@ -33,7 +33,16 @@ public class Main{
 
         public static void main(String[]rgs){
 
-            double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            double[][] a = {
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},};
 
             Matriz A = new Matriz(a);
 
