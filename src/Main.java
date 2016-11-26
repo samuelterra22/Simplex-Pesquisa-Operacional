@@ -5,7 +5,7 @@
 
         public static void main(String[]rgs){
 
-            double[][] a = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+            double[][] a = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};  /// Mattrix
 
             Matriz A = new Matriz(a);
 
