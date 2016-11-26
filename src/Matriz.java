@@ -4,9 +4,12 @@
 
 public class Matriz {
 
-    private final int L;                // numero de linhas
-    private final int C;                // numero de colunas
+    private final int L = 9;                // numero de linhas (M)
+    private final int C = 13;                // numero de colunas (N)
     private final double[][] matriz;    // vetor M-por-N que representa a matriz
+
+
+
 
     // inicializa uma matriz M por N de zeros
     public Matriz(int L, int C) {
@@ -183,4 +186,48 @@ public class Matriz {
         }
         return A;
     }
+
+    public Double calcTheta(int m){
+        Double theta  = Double.POSITIVE_INFINITY;
+        int indiceL = -1;
+
+        for (int i = 0; i <  L ; i++) {
+            if ()
+        }
+    }
+
+    /**
+     *
+     * 	#
+     # Passo 4: Determina o valor de Theta
+     #
+
+     # Chuta um valor alto para o theta, e vai reduzindo de acordo com a razao x_i / u_i
+     Theta   <- Inf;
+     IndiceL <- -1;
+
+     # Varre indices basicos determinando o valor de theta que garante factibilidade
+     for(i in 1:m)
+     {
+     # Calcula a razao
+     if(u[i] > 0)
+     {
+     # Calcula a razao
+     Razao <- x[i] / u[i];
+
+     # Atualiza a razao, pois encontramos um menor valor de theta
+     if(Razao < Theta)
+     {
+     Theta   <- Razao;
+     IndiceL <- IndicesBase[i];
+     }
+     }
+     }
+
+     # Exibe variavel que irá deixar a base (apenas debug)
+     cat('\tVariavel  Sai  Base: x[', IndiceL, '], Theta = ', Theta, '\n');
+
+     #
+     *
+    */
 }
