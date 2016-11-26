@@ -198,6 +198,9 @@ public class Matriz {
         Double theta  = Double.POSITIVE_INFINITY;
         int indiceL = -1;
 
+        int L = 9; //linhas     deixa assim por esquanto
+        int C = 13;//colunas
+
         for (int i = 0; i <  L ; i++) {
             if (u[i] > 0 ){
 
