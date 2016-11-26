@@ -154,7 +154,7 @@ public class Matriz {
     public Matriz decomposicaoLU(int n) {
 
         //int n = Math.min(L,C);
-        Matriz A = this;
+        Matriz A = this.copia();
         int pivot[] = new int[n];
         double t, multiplicador;
         int m, p;
