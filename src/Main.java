@@ -4,9 +4,8 @@
     public class Main{
 
         public static void main(String[]rgs){
+   ///fksjdçalfkjsadf
 
-            //double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-            //double[][] a = {{5, 7}, {15, 13}};
             double[][] a = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
             Matriz A = new Matriz(a);
