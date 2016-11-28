@@ -8,7 +8,11 @@ public class Matriz {
     private int L;                    // numero de linhas (M)
     private int C;                    // numero de colunas (N)
 
-    // inicializa uma matriz M por N de zeros
+    /**
+     * Inicializa uma matriz M por N de zeros
+     *
+     * @author Samuel
+     */
     public Matriz(int L, int C) {
         this.L = L;
         this.C = C;
@@ -16,8 +20,7 @@ public class Matriz {
     }
 
     /**
-     * inicializa uma matriz baseada num vetor recebido por parametro
-     *
+     * Inicializa uma matriz baseada num vetor recebido por parametro
      * @author Samuel
      */
     public Matriz(double[][] data) {
@@ -31,7 +34,6 @@ public class Matriz {
 
     /**
      * Inicializa matriz de acordo com um objeto ja pronto
-     *
      * @author Samuel
      */
     private Matriz(Matriz A) {
@@ -40,7 +42,6 @@ public class Matriz {
 
     /**
      * Cria e retorna uma matriz identidade
-     *
      * @author Samuel
      */
     public static Matriz identidade(int C) {
@@ -53,7 +54,6 @@ public class Matriz {
 
     /**
      * Multiplicação matriz por vetor
-     *
      * @author Diego
      */
     public double[] matrixByVector(double m[][], double v[]) {
@@ -73,7 +73,6 @@ public class Matriz {
 
     /**
      * Multiplicação  vetor por matriz
-     *
      * @author Diego
      */
     public double[] matrixByVector(double v[], double m[][]) {
@@ -96,7 +95,6 @@ public class Matriz {
 
     /**
      * Realiza soma da matriz
-     *
      * @author Samuel
      */
     public Matriz soma(Matriz B) {
@@ -113,7 +111,6 @@ public class Matriz {
 
     /**
      * Compara matriz
-     *
      * @author Samuel
      */
     public boolean igual(Matriz B) {
@@ -129,7 +126,6 @@ public class Matriz {
 
     /**
      * Realiza a subtracao de matriz
-     *
      * @author Samuel
      */
     public Matriz menos(Matriz B) {
@@ -146,7 +142,6 @@ public class Matriz {
 
     /**
      * Realiza a multiplicacao de matriz
-     *
      * @author Samuel
      */
     public Matriz mult(Matriz B) {
@@ -165,7 +160,6 @@ public class Matriz {
 
     /**
      * Multiplica a matriz com um escalar
-     *
      * @author Samuel
      */
     public Matriz multEscalar(double escalar) {
@@ -181,7 +175,6 @@ public class Matriz {
 
     /**
      * Cria e retorna a matriz transposta
-     *
      * @author Samuel
      */
     public Matriz transposta() {
@@ -195,7 +188,6 @@ public class Matriz {
 
     /**
      * Cria uma copia da matriz
-     *
      * @author Samuel
      */
     public Matriz copia() {
