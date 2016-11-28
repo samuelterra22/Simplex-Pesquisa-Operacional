@@ -44,7 +44,7 @@ public class Simplex {
         // implementa
         double aux[] = new double[C];
 
-        Matriz m = new Matriz();
+        Matriz m = new Matriz(null, c);
 
         for (int i = 0; i < L; i++) {
             aux[i] = Matriz.matriz[i][jotaEscolhido];
@@ -114,7 +114,7 @@ public class Simplex {
      */
     public void atualizaVBandNB() {
 
-        double theta = calcTheta()// implementar
+        double theta = calcTheta();// implementar
 
         /*Calcula novo valor da nao-basica, e atualiza base8 */
         for (int i = 0; i < L; i++) {

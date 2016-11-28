@@ -4,17 +4,9 @@
 
 public class Matriz {
 
-    /**
-     * Variáveis Globais
-     */
-
-    private final int L = 9;                // numero de linhas (M)
-    private final int C = 13;                // numero de colunas (N)
-    public static double[][] matriz;         // vetor M-por-N que representa a matriz
-
-    public void Matriz(){
-
-    }
+    private static double[][] matriz;        // vetor M-por-N que representa a matriz
+    private int L;                    // numero de linhas (M)
+    private int C;                    // numero de colunas (N)
 
     // inicializa uma matriz M por N de zeros
     public Matriz(int L, int C) {
@@ -29,10 +21,10 @@ public class Matriz {
      * @author Samuel
      */
     public Matriz(double[][] matriz) {
-        this.matriz = new double[L][C];
+        Matriz.matriz = new double[L][C];
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
-                this.matriz[i][j] = matriz[i][j];
+                Matriz.matriz[i][j] = matriz[i][j];
             }
         }
     }
@@ -43,7 +35,7 @@ public class Matriz {
      * @author Samuel
      */
     private Matriz(Matriz A) {
-        this(A.matriz);
+        this(matriz);
     }
 
     /**
@@ -54,7 +46,7 @@ public class Matriz {
     public static Matriz identidade(int C) {
         Matriz I = new Matriz(C, C);
         for (int i = 0; i < C; i++) {
-            I.matriz[i][i] = 1;
+            matriz[i][i] = 1;
         }
         return I;
     }
@@ -99,6 +91,9 @@ public class Matriz {
         return produto;
     }
 
+    public void Matriz() {
+    }
+
     /**
      * Realiza soma da matriz
      *
@@ -110,7 +105,7 @@ public class Matriz {
         Matriz C = new Matriz(L, this.C);
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < this.C; j++) {
-                C.matriz[i][j] = A.matriz[i][j] + B.matriz[i][j];
+                matriz[i][j] = matriz[i][j] + matriz[i][j];
             }
         }
         return C;
@@ -126,7 +121,7 @@ public class Matriz {
         if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
-                if (A.matriz[i][j] != B.matriz[i][j]) return false;
+                if (matriz[i][j] != matriz[i][j]) return false;
             }
         }
         return true;
@@ -143,7 +138,7 @@ public class Matriz {
         Matriz C = new Matriz(this.L, this.C);
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < this.C; j++) {
-                C.matriz[i][j] = A.matriz[i][j] - B.matriz[i][j];
+                matriz[i][j] = matriz[i][j] - matriz[i][j];
             }
         }
         return C;
@@ -161,7 +156,7 @@ public class Matriz {
         for (int i = 0; i < C.L; i++) {
             for (int j = 0; j < C.C; j++) {
                 for (int k = 0; k < A.C; k++) {
-                    C.matriz[i][j] += (A.matriz[i][k] * B.matriz[k][j]);
+                    matriz[i][j] += (matriz[i][k] * matriz[k][j]);
                 }
             }
         }
@@ -178,7 +173,7 @@ public class Matriz {
         Matriz C = new Matriz(A.L, A.C);
         for (int i = 0; i < C.L; i++) {
             for (int j = 0; j < C.C; j++) {
-                C.matriz[i][j] = A.matriz[i][j] * escalar;
+                matriz[i][j] = matriz[i][j] * escalar;
             }
         }
         return C;
@@ -193,7 +188,7 @@ public class Matriz {
         Matriz A = new Matriz(C, L);
         for (int i = 0; i < L; i++)
             for (int j = 0; j < C; j++) {
-                A.matriz[j][i] = this.matriz[i][j];
+                matriz[j][i] = matriz[i][j];
             }
         return A;
     }
@@ -207,7 +202,7 @@ public class Matriz {
         Matriz A = new Matriz(L, C);
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
-                A.matriz[i][j] = matriz[i][j];
+                matriz[i][j] = matriz[i][j];
             }
         }
         return A;
