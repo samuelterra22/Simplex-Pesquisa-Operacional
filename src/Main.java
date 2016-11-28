@@ -50,5 +50,15 @@ public class Main{
             double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
 
             Simplex s = new Simplex();
+
+            double[][] x = A.getMatriz();
+
+            for (int i = 0; i < A.getMatriz().length; i++) {
+                for (int j = 0; j < A.getMatriz()[0].length; j++) {
+                    System.out.printf("%9.2f ", x[i][j]);
+                }
+                System.out.println();
+            }
+
         }
     }

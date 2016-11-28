@@ -30,7 +30,23 @@ public class Simplex {
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
-    private Matriz jacobi(int n) {
+    private Matriz jacobi(Matriz a, double b[], double toler, int maxInter) {
+
+        int n = a.getMatriz().length;
+        double A[][] = a.getMatriz();
+        double x[] = new double[n];
+        int inter;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    A[i][j] = A[i][j] / A[i][i];
+                }
+            }
+            b[i] = b[i] / A[i][i];
+            x[i] = b[i];
+        }
+        inter = 0;
 
         return null;
     }
