@@ -1,9 +1,6 @@
-
-
 /**
  * Created by diego on 28/11/16.
  */
-
 
 public class Simplex {
 
@@ -30,7 +27,7 @@ public class Simplex {
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
-    public Matriz jacobi(int n) {
+    private Matriz jacobi(int n) {
 
         return null;
     }
@@ -39,9 +36,7 @@ public class Simplex {
      * Passo 3: Computa vetor u
      * @author Diego
      */
-
-
-    public boolean computaVetorU() {
+    private boolean computaVetorU() {
 
         // Não chegamos em uma solucao ótima ainda.Alguma variável básica deve sair da base para dar
         // lugar a entrada de uma variável não básica.Computa 'u' para verificar se solucao é ilimitada
@@ -49,7 +44,7 @@ public class Simplex {
         // implementa
         double aux[] = new double[C];
 
-        //Matriz m = new Matriz(null, c);
+        //Matriz m = new Matriz(null, c);   <-  tem methodo que retorna a matriz
 
         for (int i = 0; i < L; i++) {
             //       aux[i] = m.matriz[i][jotaEscolhido];
@@ -80,7 +75,7 @@ public class Simplex {
      *
      * @author Diego
      */
-    public double calcTheta(double b[]) {
+    private double calcTheta(double b[]) {
 
         double theta = Double.POSITIVE_INFINITY;
         double indiceL = -1;
@@ -117,7 +112,7 @@ public class Simplex {
      * @author Diego
      *
      */
-    public void atualizaVBandNB() {
+    private void atualizaVBandNB() {
 
         // double theta = calcTheta();// implementar
 

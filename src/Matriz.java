@@ -209,8 +209,7 @@ public class Matriz {
     }
 
     /**
-     * Imprime matriz no formato padrao
-     *
+     * Retorna a matriz[][]
      * @author Samuel
      */
     public double[][] getMatriz() {
@@ -219,7 +218,6 @@ public class Matriz {
 
     /**
      * Imprime matriz no formato padrao
-     *
      * @author Samuel
      */
     public void show() {
