@@ -13,6 +13,9 @@ public class Simplex {
     private int C;                // numero de colunas (N)
 
     public Simplex() {
+
+        // inicializar todos os valores no contrutor, para usar no Main deve-se instanaciar um objeto Simplex
+
         L = 9;                // numero de linhas (M)
         C = 13;                // numero de colunas (N)
 
