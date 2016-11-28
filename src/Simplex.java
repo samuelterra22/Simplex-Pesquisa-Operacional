@@ -5,8 +5,6 @@
  */
 
 
-import java.lang.Math;
-
 public class Simplex {
 
 
@@ -40,30 +38,30 @@ public class Simplex {
             // Escolha do pivot
             p = j;
             for (int k = j + 1; k < n; ++k) {
-                if (Math.abs(A.matriz[k][j]) > Math.abs(A.matriz[p][j])) {
+                if (Math.abs(Matriz.matriz[k][j]) > Math.abs(Matriz.matriz[p][j])) {
                     p = k;
                 }
             }
             if (p != j) {
                 for (int k = 0; k < n; k++) {
                     // Troca das linhas p e j
-                    t = A.matriz[j][k];
-                    A.matriz[j][k] = A.matriz[p][k];
-                    A.matriz[p][k] = t;
+                    t = Matriz.matriz[j][k];
+                    Matriz.matriz[j][k] = Matriz.matriz[p][k];
+                    Matriz.matriz[p][k] = t;
                 }
                 // Armazena permutas de b
                 m = pivot[j];
                 pivot[j] = pivot[p];
                 pivot[p] = m;
             }
-            if (Math.abs(A.matriz[j][j]) != 0) {
+            if (Math.abs(Matriz.matriz[j][j]) != 0) {
                 for (int i = j + 1; i < n; i++) {
                     // Pivoteamento por eliminacao de Gauss
-                    multiplicador = A.matriz[i][j] / A.matriz[j][j];
-                    A.matriz[i][j] = multiplicador;
+                    multiplicador = Matriz.matriz[i][j] / Matriz.matriz[j][j];
+                    Matriz.matriz[i][j] = multiplicador;
                     // Multiplicacao Mij
                     for (int k = j + 1; k < n; k++) {
-                        A.matriz[i][k] = A.matriz[i][k] - (multiplicador * A.matriz[j][k]);
+                        Matriz.matriz[i][k] = Matriz.matriz[i][k] - (multiplicador * Matriz.matriz[j][k]);
                     }
                 }
             }
@@ -91,11 +89,11 @@ public class Simplex {
         Matriz m = new Matriz();
 
         for (int i = 0; i < L; i++) {
-            aux[i] = m.matriz[i][jotaEscolhido];
+            aux[i] = Matriz.matriz[i][jotaEscolhido];
         }
 
 
-        u =  m.matrixByVector(BMenosUm,aux);
+        u = Matriz.matrixByVector(BMenosUm, aux);
 
         // Verifica se nenhum componente de u e ' positivo
         boolean existePositivo = false;
@@ -188,7 +186,7 @@ public class Simplex {
      *
      *
      */
-    public void start(m,b,c) {
+    public void start(Matriz m, double b[], double c[]) {
         int iteracao = 0;
         boolean flag = true;
 
