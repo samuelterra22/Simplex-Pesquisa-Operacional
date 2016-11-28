@@ -31,18 +31,27 @@ public class Simplex {
      *
      * @author Samuel
      */
-    private double calculaNormaRelativa() {
-        double norma = 0.0;
+    private double calculaNormaRelativa(double[] xii, double xi[], int n) {
+        double numNorma = 0.0;
+        double demNorma = 0.0;
+        double diferenca = 0.0;
 
+        for (int i = 0; i < n; i++) {
+            diferenca = Math.abs(xii[i] - xi[i]);
+            if (diferenca > numNorma)
+                numNorma = diferenca;
+            if (Math.abs(xii[i]) > demNorma)
+                demNorma = Math.abs(xii[i]);
+        }
 
-        return 0;
+        return numNorma / demNorma;
     }
 
     /**
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
-    private Matriz jacobi(Matriz a, double b[], double toler, int maxInter) {
+    public double[] jacobi(Matriz a, double b[], double toler, int maxInter) {
 
         int n = a.getMatriz().length;
         double A[][] = a.getMatriz();
@@ -62,7 +71,6 @@ public class Simplex {
             x[i] = b[i];
         }
         inter = 0;
-
         while ((normaRelativa <= toler) || (inter >= maxInter)) {
             inter++;
             for (int i = 0; i < n; i++) {
@@ -74,11 +82,10 @@ public class Simplex {
                 }
                 novoX[i] = b[i] - soma;
             }
-            //normaRelativa = calculaNormaRelativa(x, novoX, n);
+            normaRelativa = calculaNormaRelativa(x, novoX, n);
             x = novoX;
         }
-
-        return null;
+        return x;
     }
 
     /**
