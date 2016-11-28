@@ -350,6 +350,7 @@ public class Matriz {
 
     /**
      *    Inicia o programa com iteração 0
+     *
      */
     public void start() {
         int iteracao = 0;
