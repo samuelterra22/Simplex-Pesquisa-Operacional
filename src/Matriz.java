@@ -56,7 +56,7 @@ public class Matriz {
      *
      * @author Diego
      */
-    public static double[] matrixByVector(double m[][], double v[]) {
+    public double[] matrixByVector(double m[][], double v[]) {
 
         double[] produto = new double[m[0].length];
         double aux = 0;
@@ -76,7 +76,7 @@ public class Matriz {
      *
      * @author Diego
      */
-    public static double[] matrixByVector(double v[], double m[][]) {
+    public double[] matrixByVector(double v[], double m[][]) {
 
         double[] produto = new double[m[0].length];
         double aux = 0;
