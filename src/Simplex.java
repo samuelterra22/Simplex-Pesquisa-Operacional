@@ -27,6 +27,18 @@ public class Simplex {
     }
 
     /**
+     * Calcula norma relativa para metodo Jacobi
+     *
+     * @author Samuel
+     */
+    private double calculaNormaRelativa() {
+        double norma = 0.0;
+
+
+        return 0;
+    }
+
+    /**
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
@@ -62,7 +74,8 @@ public class Simplex {
                 }
                 novoX[i] = b[i] - soma;
             }
-            normaRelativa =
+            //normaRelativa = calculaNormaRelativa(x, novoX, n);
+            x = novoX;
         }
 
         return null;
