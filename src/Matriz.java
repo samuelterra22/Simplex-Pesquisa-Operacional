@@ -20,13 +20,13 @@ public class Matriz {
      *
      * @author Samuel
      */
-    public Matriz(double[][] matriz) {
-        Matriz.matriz = new double[L][C];
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
-                Matriz.matriz[i][j] = matriz[i][j];
-            }
-        }
+    public Matriz(double[][] data) {
+        this.L = data.length;
+        this.C = data[0].length;
+        matriz = new double[L][C];
+        for (int i = 0; i < L; i++)
+            for (int j = 0; j < C; j++)
+                matriz[i][j] = data[i][j];
     }
 
     /**
@@ -225,7 +225,7 @@ public class Matriz {
     public void show() {
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
-                System.out.printf("%9.4f ", matriz[i][j]);
+                System.out.printf("%9.2f ", matriz[i][j]);
             }
             System.out.println();
         }
