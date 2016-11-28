@@ -35,7 +35,10 @@ public class Simplex {
         int n = a.getMatriz().length;
         double A[][] = a.getMatriz();
         double x[] = new double[n];
+        double novoX[] = new double[n];
         int inter;
+        double normaRelativa = 0.0;
+        double soma = 0.0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -47,6 +50,20 @@ public class Simplex {
             x[i] = b[i];
         }
         inter = 0;
+
+        while ((normaRelativa <= toler) || (inter >= maxInter)) {
+            inter++;
+            for (int i = 0; i < n; i++) {
+                soma = 0.0;
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        soma = soma + A[i][j] * x[j];
+                    }
+                }
+                novoX[i] = b[i] - soma;
+            }
+            normaRelativa =
+        }
 
         return null;
     }
