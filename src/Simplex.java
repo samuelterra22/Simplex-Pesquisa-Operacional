@@ -14,7 +14,7 @@ public class Simplex {
     private static  double[] indicesBase = new double[L];
     private static  double[] indicesNaoBase = new double[C-L];
     private static  double[] u = new double[L];
-    private static  int jotaEscolhido = 0;
+    private static  int jotaEscolhido = 0;  //joTa
     private final int L = 9;                // numero de linhas (M)
     private final int C = 13;                // numero de colunas (N)
 
