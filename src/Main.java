@@ -45,7 +45,10 @@ public class Main{
                     {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
 
             Matriz A = new Matriz(a);
+            double M = 100 * 320;
+            double[] b = {320, 50, 30, 60, 50, 10, 20, 20, 30};
+            double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
 
-            A.show();
+            Simplex s = new Simplex();
         }
     }
