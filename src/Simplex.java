@@ -16,8 +16,8 @@ public class Simplex {
 
         // inicializar todos os valores no contrutor, para usar no Main deve-se instanaciar um objeto Simplex
 
-        L = 9;                // numero de linhas (M)
-        C = 13;                // numero de colunas (N)
+        L = 9;      // numero de linhas (M)
+        C = 13;     // numero de colunas (N)
 
         BMenosUm = new double[L][L];
         indicesBase = new double[L];
