@@ -49,8 +49,8 @@ public class Main{
 
             /* Debug */
 
-            double[][] b = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-            double[][] c = {{12, 0, 30}, {5, 10, 6}, {7, 0, 1}};
+            double[][] b = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
+            double[][] c = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
             Matriz B = new Matriz(b);
             Matriz C = new Matriz(c);
 

@@ -1,25 +1,20 @@
-import java.lang.reflect.ParameterizedType;
-
 /**
  * Created by samuel on 24/11/16.
  */
 
 public class Matriz {
 
-    private final int L = 9;                // numero de linhas (M)
-    private final int C = 13;                // numero de colunas (N)
-    private final double[][] matriz;         // vetor M-por-N que representa a matriz
-
     /**
      * Variáveis Globais
      */
     private static  double[][] BMenosUm = new  double[L][L];
-
     private static  double[] indicesBase = new double[L];
     private static  double[] indicesNaoBase = new double[C-L];
     private static  double[] u = new double[L];
-
     private static  int jotaEscolhido = 0;
+    private final int L = 9;                // numero de linhas (M)
+    private final int C = 13;                // numero de colunas (N)
+    private final double[][] matriz;         // vetor M-por-N que representa a matriz
 
 
     // inicializa uma matriz M por N de zeros
@@ -29,7 +24,11 @@ public class Matriz {
         matriz = new double[L][C];
     }
 
-    // inicializa uma matriz baseada num vetor recebido por parametro
+    /**
+     * inicializa uma matriz baseada num vetor recebido por parametro
+     *
+     * @author Samuel
+     */
     public Matriz(double[][] matriz) {
         this.matriz = new double[L][C];
         for (int i = 0; i < L; i++) {
@@ -39,12 +38,20 @@ public class Matriz {
         }
     }
 
-    // inicializa matriz de acordo com um objeto ja pronto
+    /**
+     * Inicializa matriz de acordo com um objeto ja pronto
+     *
+     * @author Samuel
+     */
     private Matriz(Matriz A) {
         this(A.matriz);
     }
 
-    // cria e retorna uma matriz identidade C-por-C
+    /**
+     * Cria e retorna uma matriz identidade
+     *
+     * @author Samuel
+     */
     public static Matriz identidade(int C) {
         Matriz I = new Matriz(C, C);
         for (int i = 0; i < C; i++) {
@@ -53,7 +60,51 @@ public class Matriz {
         return I;
     }
 
-    // return C = A + B
+    /**
+     * Multiplicação matriz por vetor
+     *
+     * @author Diego
+     */
+    public static double[] matrixbyVector(double m[][], double v[]) {
+
+        double[] produto = new double[m[0].length];
+        double aux = 0;
+
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++) {
+                aux = m[i][j] * v[j];
+            }
+            produto[i] = aux;
+            aux = 0;
+        }
+        return produto;
+    }
+
+    /**
+     * Multiplicação  vetor por matriz
+     *
+     * @author Diego
+     */
+    public static double[] matrixbyVector(double v[], double m[][]) {
+
+        double[] produto = new double[m[0].length];
+        double aux = 0;
+
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++) {
+                aux = m[i][j] * v[j];
+            }
+            produto[i] = aux;
+            aux = 0;
+        }
+        return produto;
+    }
+
+    /**
+     * Realiza soma da matriz
+     *
+     * @author Samuel
+     */
     public Matriz soma(Matriz B) {
         Matriz A = this;
         if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
@@ -66,7 +117,11 @@ public class Matriz {
         return C;
     }
 
-    // A = B ?
+    /**
+     * Compara matriz
+     *
+     * @author Samuel
+     */
     public boolean igual(Matriz B) {
         Matriz A = this;
         if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
@@ -78,7 +133,11 @@ public class Matriz {
         return true;
     }
 
-    // return C = A - B
+    /**
+     * Realiza a subtracao de matriz
+     *
+     * @author Samuel
+     */
     public Matriz menos(Matriz B) {
         Matriz A = this;
         if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
@@ -91,7 +150,11 @@ public class Matriz {
         return C;
     }
 
-    // retorna C = A * B
+    /**
+     * Realiza a multiplicacao de matriz
+     *
+     * @author Samuel
+     */
     public Matriz mult(Matriz B) {
         Matriz A = this;
         if (A.C != B.L) throw new RuntimeException("Dimensoes de matriz ilegais.");
@@ -106,7 +169,11 @@ public class Matriz {
         return C;
     }
 
-    // multiplica a matriz por um escalar
+    /**
+     * Multiplica a matriz com um escalar
+     *
+     * @author Samuel
+     */
     public Matriz multEscalar(double escalar) {
         Matriz A = this;
         Matriz C = new Matriz(A.L, A.C);
@@ -118,7 +185,11 @@ public class Matriz {
         return C;
     }
 
-    // cria e retorna a matriz transposta
+    /**
+     * Cria e retorna a matriz transposta
+     *
+     * @author Samuel
+     */
     public Matriz transposta() {
         Matriz A = new Matriz(C, L);
         for (int i = 0; i < L; i++)
@@ -128,7 +199,11 @@ public class Matriz {
         return A;
     }
 
-    // cria uma copia
+    /**
+     * Cria uma copia da matriz
+     *
+     * @author Samuel
+     */
     public Matriz copia() {
         Matriz A = new Matriz(L, C);
         for (int i = 0; i < L; i++) {
@@ -139,7 +214,11 @@ public class Matriz {
         return A;
     }
 
-    // imprime matriz no formato padrao
+    /**
+     * Imprime matriz no formato padrao
+     *
+     * @author Samuel
+     */
     public void show() {
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
@@ -149,6 +228,11 @@ public class Matriz {
         }
     }
 
+    /**
+     * Decomposicao LU
+     *
+     * @author Samuel
+     */
     public Matriz decomposicaoLU(int n) {
 
         //int n = Math.min(L,C);
@@ -196,47 +280,6 @@ public class Matriz {
         return A;
     }
 
-
-    /**
-     * Multiplicação matriz por vetor
-     *
-     * @author Diego
-     */
-     public static double[] matrixbyVector(double m[][],double v[]){
-
-         double[] produto = new double[m[0].length];
-         double aux =0;
-
-         for (int i = 0; i < L ; i++) {
-             for (int j = 0; j < C; j++) {
-                aux =  m[i][j] * v[j];
-             }
-             produto[i] = aux;
-             aux = 0;
-         }
-       return produto;
-    }
-
-    /**
-     * Multiplicação  vetor por matriz
-     *
-     * @author Diego
-     */
-    public static double[] matrixbyVector(double v[], double m[][]){
-
-        double[] produto = new double[m[0].length];
-        double aux =0;
-
-        for (int i = 0; i < L ; i++) {
-            for (int j = 0; j < C; j++) {
-                aux =  m[i][j] * v[j];
-            }
-            produto[i] = aux;
-            aux = 0;
-        }
-        return produto;
-    }
-
     /**
      * Passo 3: Computa vetor u
      *
@@ -271,9 +314,7 @@ public class Matriz {
 
             // Testa.Se não houver no vetor 'u' (sinal inverso da direcao factivel)nenhum componente
             // positivo, é porque o valor ótimo é - infinito.
-            if (!existePositivo)
-                return false;
-            else return true;
+            return existePositivo;
 
         }
         return false;
