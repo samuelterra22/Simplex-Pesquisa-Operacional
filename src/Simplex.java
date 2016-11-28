@@ -18,55 +18,13 @@ public class Simplex {
 
 
     /**
-     * Decomposicao LU
+     * Metodo Jacobi para resolver sistemas lineares
      *
      * @author Samuel
      */
-    public Matriz decomposicaoLU(int n) {
+    public Matriz jacobi(int n) {
 
-        //int n = Math.min(L,C);
-        Matriz A = this.copia();
-        int pivot[] = new int[n];
-        double t, multiplicador;
-        int m, p;
-
-        // Inicialização ordenada de Pivot
-        for (int i = 0; i < pivot.length; i++) {
-            pivot[i] = i;
-        }
-        for (int j = 0; j < n - 1; j++) {
-            // Escolha do pivot
-            p = j;
-            for (int k = j + 1; k < n; ++k) {
-                if (Math.abs(Matriz.matriz[k][j]) > Math.abs(Matriz.matriz[p][j])) {
-                    p = k;
-                }
-            }
-            if (p != j) {
-                for (int k = 0; k < n; k++) {
-                    // Troca das linhas p e j
-                    t = Matriz.matriz[j][k];
-                    Matriz.matriz[j][k] = Matriz.matriz[p][k];
-                    Matriz.matriz[p][k] = t;
-                }
-                // Armazena permutas de b
-                m = pivot[j];
-                pivot[j] = pivot[p];
-                pivot[p] = m;
-            }
-            if (Math.abs(Matriz.matriz[j][j]) != 0) {
-                for (int i = j + 1; i < n; i++) {
-                    // Pivoteamento por eliminacao de Gauss
-                    multiplicador = Matriz.matriz[i][j] / Matriz.matriz[j][j];
-                    Matriz.matriz[i][j] = multiplicador;
-                    // Multiplicacao Mij
-                    for (int k = j + 1; k < n; k++) {
-                        Matriz.matriz[i][k] = Matriz.matriz[i][k] - (multiplicador * Matriz.matriz[j][k]);
-                    }
-                }
-            }
-        }
-        return A;
+        return null;
     }
 
     /**
