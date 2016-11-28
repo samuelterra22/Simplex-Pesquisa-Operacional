@@ -7,19 +7,27 @@
 
 public class Simplex {
 
+    private static double[][] BMenosUm;
+    private static double[] indicesBase;
+    private static double[] indicesNaoBase;
+    private static double[] u;
+    private static int jotaEscolhido;  //joTa
+    private int L;                // numero de linhas (M)
+    private int C;                // numero de colunas (N)
 
-    private static  double[][] BMenosUm = new  double[L][L];
-    private static  double[] indicesBase = new double[L];
-    private static  double[] indicesNaoBase = new double[C-L];
-    private static  double[] u = new double[L];
-    private static  int jotaEscolhido = 0;  //joTa
-    private final int L = 9;                // numero de linhas (M)
-    private final int C = 13;                // numero de colunas (N)
+    public Simplex() {
+        L = 9;                // numero de linhas (M)
+        C = 13;                // numero de colunas (N)
 
+        BMenosUm = new double[L][L];
+        indicesBase = new double[L];
+        indicesNaoBase = new double[C - L];
+        u = new double[L];
+        jotaEscolhido = 0;  //joTa
+    }
 
     /**
      * Metodo Jacobi para resolver sistemas lineares
-     *
      * @author Samuel
      */
     public Matriz jacobi(int n) {
@@ -29,10 +37,7 @@ public class Simplex {
 
     /**
      * Passo 3: Computa vetor u
-     *
      * @author Diego
-     *
-     *
      */
 
 
@@ -44,14 +49,14 @@ public class Simplex {
         // implementa
         double aux[] = new double[C];
 
-        Matriz m = new Matriz(null, c);
+        //Matriz m = new Matriz(null, c);
 
         for (int i = 0; i < L; i++) {
-            aux[i] = Matriz.matriz[i][jotaEscolhido];
+            //       aux[i] = m.matriz[i][jotaEscolhido];
         }
 
 
-        u = Matriz.matrixByVector(BMenosUm, aux);
+        //    u = Matriz.matrixByVector(BMenosUm, aux);
 
         // Verifica se nenhum componente de u e ' positivo
         boolean existePositivo = false;
@@ -114,17 +119,17 @@ public class Simplex {
      */
     public void atualizaVBandNB() {
 
-        double theta = calcTheta();// implementar
+        // double theta = calcTheta();// implementar
 
         /*Calcula novo valor da nao-basica, e atualiza base8 */
         for (int i = 0; i < L; i++) {
 
             //Se encontramos o L-ésimo indica da variável básica que deixará a base, substitui-a
             //pela variável não-básica correspondente à j-ésima direção factível de redução de custo
-            if (indicesBase[i] == indiceL) {
-                x[i] = theta;
+            //   if (indicesBase[i] == indiceL) {
+            //       x[i] = theta;
                 indicesBase[i] = jotaEscolhido;
-            }
+            //   }
         }
 
         // Para as demais variáveis não básicas, apenas atualiza o índice de quem saiu da base (e
@@ -132,7 +137,7 @@ public class Simplex {
         for (int i = 0; i < C - L; i++) {
 
             if (indicesNaoBase[i] == jotaEscolhido) {
-                indicesNaoBase[i] = indiceL;
+                //     indicesNaoBase[i] = indiceL;
             }
         }
     }

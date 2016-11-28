@@ -213,6 +213,15 @@ public class Matriz {
      *
      * @author Samuel
      */
+    public double[][] getMatriz() {
+        return matriz;
+    }
+
+    /**
+     * Imprime matriz no formato padrao
+     *
+     * @author Samuel
+     */
     public void show() {
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {

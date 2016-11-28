@@ -44,19 +44,18 @@ public class Main{
                     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0},
                     {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1},};
 
-            Matriz A = new Matriz(a, c);
+            Matriz A = new Matriz(a);
 
 
             /* Debug */
 
             double[][] b = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
             double[][] c = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
-            Matriz B = new Matriz(b, c);
-            Matriz C = new Matriz(c, c);
+            Matriz B = new Matriz(b);
+            Matriz C = new Matriz(c);
 
             B.show();
             System.out.println();
-            C.decomposicaoLU(3);             //   <- acho que ta com alguma treta nesse metodo
             C.show();
         }
     }
