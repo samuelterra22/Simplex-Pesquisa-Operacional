@@ -1,7 +1,8 @@
 /**
  * Created by diego on 28/11/16.
- * Atualizado...
+ * Atualizado......
  */
+
 
 public class Simplex {
 
@@ -211,8 +212,9 @@ public class Simplex {
 
 
             flag = computaVetorU();
-            if (!flag){
+            if (flag){
                 System.out.println("Possue infinitas soluções");
+                return;
             }
 
             iteracao++;
