@@ -51,52 +51,12 @@ public class Simplex {
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
-    public double[] jacobi(Matriz a, double b[], double toler, int maxInter) {
+    public double[] gauss(Matriz a, double b[]) {
 
         int n = a.getMatriz().length;
         double A[][] = a.getMatriz();
-        double x[] = new double[n];
-        double novoX[] = new double[n];
-        int inter = 0;
-        double normaRelativa = 0.0;
-        double soma = 0.0;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    A[i][j] = A[i][j] / A[i][i];
-                }
-            }
-            b[i] = b[i] / A[i][i];
-            x[i] = b[i];
-        }
-        while (true) {
-            inter++;
-            for (int i = 0; i < n; i++) {
-                soma = 0.0;
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        soma = soma + A[i][j] * x[j];
-                    }
-                }
-                novoX[i] = b[i] - soma;
-            }
-            normaRelativa = calculaNormaRelativa(x, novoX, n);
-
-            System.out.println("Norma: " + normaRelativa);
-            System.out.println("Toler: " + toler);
-            System.out.println("Inter: " + inter);
-            System.out.println("MaxInter: " + maxInter);
-
-            //x = novoX;
-            //copiaVetor(x, novoX);
-            System.arraycopy(b, 0, a, 0, b.length);
-
-            if ((normaRelativa <= toler) || (inter >= maxInter))
-                break;
-        }
-
-        return x;
+        return null;
     }
 
     /**

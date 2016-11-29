@@ -57,7 +57,7 @@ public class Main{
             Matriz AA = new Matriz(aa);
             double bb[] = {8, -4, -12};
 
-            double x[] = s.jacobi(AA, bb, 0.0005, 1000);
+            double x[] = s.gauss(AA, bb);
 
             for (int i = 0; i < 3; i++) {
                 System.out.printf("%9.2f ", x[i]);
