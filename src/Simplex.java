@@ -48,21 +48,6 @@ public class Simplex {
     }
 
     /**
-     * Copia um vetor para outro: A <- B
-     *
-     * @author Samuel
-     */
-    private boolean copiaVetor(double a[], double b[]) {
-        if (a.length != b.length)
-            return false;
-        else {
-            for (int i = 0; i < b.length; i++)
-                a[i] = b[i];
-            return true;
-        }
-    }
-
-    /**
      * Metodo Jacobi para resolver sistemas lineares
      * @author Samuel
      */
@@ -72,7 +57,7 @@ public class Simplex {
         double A[][] = a.getMatriz();
         double x[] = new double[n];
         double novoX[] = new double[n];
-        int inter;
+        int inter = 0;
         double normaRelativa = 0.0;
         double soma = 0.0;
 
@@ -85,8 +70,7 @@ public class Simplex {
             b[i] = b[i] / A[i][i];
             x[i] = b[i];
         }
-        inter = 0;
-        do {
+        while (true) {
             inter++;
             for (int i = 0; i < n; i++) {
                 soma = 0.0;
@@ -105,8 +89,12 @@ public class Simplex {
             System.out.println("MaxInter: " + maxInter);
 
             //x = novoX;
-            copiaVetor(x, novoX);
-        } while (((normaRelativa <= toler) || (inter >= maxInter)));
+            //copiaVetor(x, novoX);
+            System.arraycopy(b, 0, a, 0, b.length);
+
+            if ((normaRelativa <= toler) || (inter >= maxInter))
+                break;
+        }
 
         return x;
     }

@@ -55,9 +55,9 @@ public class Main{
 
             double aa[][] = {{8, 1, -1}, {1, -7, 2}, {2, 1, 9}};
             Matriz AA = new Matriz(aa);
-            double bb[] = {57, 20, -4};
+            double bb[] = {8, -4, -12};
 
-            double x[] = s.jacobi(AA, bb, 0.05, 1000);
+            double x[] = s.jacobi(AA, bb, 0.0005, 1000);
 
             for (int i = 0; i < 3; i++) {
                 System.out.printf("%9.2f ", x[i]);
