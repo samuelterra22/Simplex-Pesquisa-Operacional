@@ -13,7 +13,8 @@
     OK  (d) Calculo da transposta da matriz
     ?   (e) Calculo da matriz inversa por decomposicao LU para calcular o vetor direção
         factivel d B e para resolver o sistema linear Bx B = b se optar por resolver o sistema por xB = B^−1 b)
-    OK  (f) Outras operacoes que surgirem sob demanda durante a implementacao do Simplex
+    OK  (f) Outras operacoes que surgirem sob demanda durante a implementacao do Simplex:
+            1 - getColuna    ok
 
     REQUISITO 03 - CALCULO DA SOLUCAO BASICA INICIAL
 
@@ -52,6 +53,16 @@ public class Main{
             /* DEBUG */
 
             Simplex s = new Simplex();
+
+            double aa[][] = {{8, 1, -1}, {1, -7, 2}, {2, 1, 9}};
+            Matriz AA = new Matriz(aa);
+            double bb[] = {8, -4, -12};
+
+            double x[] = s.gauss(AA, bb);
+
+            for (int i = 0; i < 3; i++) {
+                System.out.printf("%9.2f ", x[i]);
+            }
 
         }
     }

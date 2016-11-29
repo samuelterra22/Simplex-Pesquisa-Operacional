@@ -45,47 +45,37 @@ public class Simplex {
             if (Math.abs(xii[i]) > demNorma)
                 demNorma = Math.abs(xii[i]);
         }
-
-        return numNorma / demNorma;
+        return (numNorma / demNorma);
     }
 
     /**
-     * Metodo Jacobi para resolver sistemas lineares
+     * Metodo para realizar Aliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
-    public double[] jacobi(Matriz a, double b[], double toler, int maxInter) {
+    public double[] gauss(Matriz a, double b[]) {
 
         int n = a.getMatriz().length;
         double A[][] = a.getMatriz();
+        double mult = 0.0;
         double x[] = new double[n];
-        double novoX[] = new double[n];
-        int inter;
-        double normaRelativa = 0.0;
         double soma = 0.0;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    A[i][j] = A[i][j] / A[i][i];
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                mult = A[j][i] / A[i][i];
+                for (int k = 0; k < n; k++) {
+                    A[j][k] = -A[i][k] * mult + A[j][k];
                 }
+                b[j] = -b[i] * mult + b[j];
             }
-            b[i] = b[i] / A[i][i];
-            x[i] = b[i];
         }
-        inter = 0;
-        while ((normaRelativa <= toler) || (inter >= maxInter)) {
-            inter++;
-            for (int i = 0; i < n; i++) {
-                soma = 0.0;
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        soma = soma + A[i][j] * x[j];
-                    }
-                }
-                novoX[i] = b[i] - soma;
+        x[n - 1] = b[n - 1] / A[n - 1][n - 1];
+        for (int i = n - 1; i >= 0; i--) {
+            soma = 0;
+            for (int j = i + 1; j < n; j++) {
+                soma = soma + A[i][j] * x[j];
             }
-            normaRelativa = calculaNormaRelativa(x, novoX, n);
-            x = novoX;
+            x[i] = (b[i] - soma) / A[i][i];
         }
         return x;
     }

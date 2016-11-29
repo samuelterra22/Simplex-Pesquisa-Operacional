@@ -201,6 +201,20 @@ public class Matriz {
     }
 
     /**
+     * Cria uma copia da matriz
+     *
+     * @author Samuel
+     */
+    public double[] getColuna(int indice) {
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < C; j++) {
+                matriz[i][j] = matriz[i][j];
+            }
+        }
+        return x;
+    }
+
+    /**
      * Retorna a matriz[][]
      * @author Samuel
      */
