@@ -57,7 +57,7 @@ public class Simplex {
         double A[][] = a.getMatriz();
         double mult = 0.0;
         double x[] = new double[n];
-        double soma = 0;
+        double soma = 0.0;
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
