@@ -53,13 +53,13 @@ public class Main{
 
             Simplex s = new Simplex();
 
-            double aa[][] = {{1, 2, -1}, {3, -4, 5}, {1, 1, 1}};
+            double aa[][] = {{8, 1, -1}, {1, -7, 2}, {2, 1, 9}};
             Matriz AA = new Matriz(aa);
-            double bb[] = {0, 10, 1};
+            double bb[] = {8, -4, -12};
 
-            double x[] = s.gauss(AA, bb);         //  <- ta funcionando
+            double x[] = s.gauss(AA, bb);
 
-            for (int i = 0; i < x.length; i++) {
+            for (int i = 0; i < 3; i++) {
                 System.out.printf("%9.2f ", x[i]);
             }
 
