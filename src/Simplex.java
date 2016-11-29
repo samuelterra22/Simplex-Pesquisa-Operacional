@@ -1,5 +1,6 @@
 /**
  * Created by diego on 28/11/16.
+ * Atualizado...
  */
 
 public class Simplex {
