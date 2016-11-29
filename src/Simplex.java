@@ -2,6 +2,7 @@
 
 /**
  * Created by diego on 28/11/16.
+ * Alualizando...
  */
 
 
@@ -14,10 +15,13 @@ public class Simplex {
     private static  double[] indicesBase = new double[L];
     private static  double[] indicesNaoBase = new double[C-L];
     private static  double[] u = new double[L];
-    private static  int jotaEscolhido = 0;  //joTa
+    private static  int jotaEscolhido = 0;  //
     private final int L = 9;                // numero de linhas (M)
     private final int C = 13;                // numero de colunas (N)
 
+
+    public Simplex() {
+    }
 
     /**
      * Decomposicao LU
@@ -191,8 +195,6 @@ public class Simplex {
     public void start(m,b,c) {
         int iteracao = 0;
         boolean flag = true;
-
-
 
         while(true){
 

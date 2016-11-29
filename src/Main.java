@@ -56,7 +56,8 @@ public class Main{
 
             B.show();
             System.out.println();
-            C.decomposicaoLU(3);             //   <- acho que ta com alguma treta nesse metodo
+            Simplex s = new Simplex();
+            s.decomposicaoLU(3);             //   <- acho que ta com alguma treta nesse metodo
             C.show();
         }
     }
