@@ -44,8 +44,22 @@ public class Simplex {
             if (Math.abs(xii[i]) > demNorma)
                 demNorma = Math.abs(xii[i]);
         }
+        return (numNorma / demNorma);
+    }
 
-        return numNorma / demNorma;
+    /**
+     * Copia um vetor para outro: A <- B
+     *
+     * @author Samuel
+     */
+    private boolean copiaVetor(double a[], double b[]) {
+        if (a.length != b.length)
+            return false;
+        else {
+            for (int i = 0; i < b.length; i++)
+                a[i] = b[i];
+            return true;
+        }
     }
 
     /**
@@ -72,7 +86,7 @@ public class Simplex {
             x[i] = b[i];
         }
         inter = 0;
-        while ((normaRelativa <= toler) || (inter >= maxInter)) {
+        do {
             inter++;
             for (int i = 0; i < n; i++) {
                 soma = 0.0;
@@ -84,9 +98,16 @@ public class Simplex {
                 novoX[i] = b[i] - soma;
             }
             normaRelativa = calculaNormaRelativa(x, novoX, n);
-            x = novoX;
-        }
-        System.out.println(inter);
+
+            System.out.println("Norma: " + normaRelativa);
+            System.out.println("Toler: " + toler);
+            System.out.println("Inter: " + inter);
+            System.out.println("MaxInter: " + maxInter);
+
+            //x = novoX;
+            copiaVetor(x, novoX);
+        } while (((normaRelativa <= toler) || (inter >= maxInter)));
+
         return x;
     }
 
