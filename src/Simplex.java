@@ -1,90 +1,98 @@
-
-
 /**
  * Created by diego on 28/11/16.
- * Alualizando...
  */
-
-
-import java.lang.Math;
 
 public class Simplex {
 
-
-    private static  double[][] BMenosUm = new  double[L][L];
-    private static  double[] indicesBase = new double[L];
-    private static  double[] indicesNaoBase = new double[C-L];
-    private static  double[] u = new double[L];
-    private static  int jotaEscolhido = 0;  //
-    private final int L = 9;                // numero de linhas (M)
-    private final int C = 13;                // numero de colunas (N)
-
+    private static double[][] BMenosUm;
+    private static double[] indicesBase;
+    private static double[] indicesNaoBase;
+    private static double[] u;
+    private static int jotaEscolhido;  //joTa
+    private int L;                // numero de linhas (M)
+    private int C;                // numero de colunas (N)
 
     public Simplex() {
+
+        // inicializar todos os valores no contrutor, para usar no Main deve-se instanaciar um objeto Simplex
+
+        L = 9;      // numero de linhas (M)
+        C = 13;     // numero de colunas (N)
+
+        BMenosUm = new double[L][L];
+        indicesBase = new double[L];
+        indicesNaoBase = new double[C - L];
+        u = new double[L];
+        jotaEscolhido = 0;  //joTa
     }
 
     /**
-     * Decomposicao LU
+     * Calcula norma relativa para metodo Jacobi
      *
      * @author Samuel
      */
-    public Matriz decomposicaoLU(int n) {
+    private double calculaNormaRelativa(double[] xii, double xi[], int n) {
+        double numNorma = 0.0;
+        double demNorma = 0.0;
+        double diferenca = 0.0;
 
-        //int n = Math.min(L,C);
-        Matriz A = this.copia();
-        int pivot[] = new int[n];
-        double t, multiplicador;
-        int m, p;
-
-        // Inicialização ordenada de Pivot
-        for (int i = 0; i < pivot.length; i++) {
-            pivot[i] = i;
+        for (int i = 0; i < n; i++) {
+            diferenca = Math.abs(xii[i] - xi[i]);
+            if (diferenca > numNorma)
+                numNorma = diferenca;
+            if (Math.abs(xii[i]) > demNorma)
+                demNorma = Math.abs(xii[i]);
         }
-        for (int j = 0; j < n - 1; j++) {
-            // Escolha do pivot
-            p = j;
-            for (int k = j + 1; k < n; ++k) {
-                if (Math.abs(A.matriz[k][j]) > Math.abs(A.matriz[p][j])) {
-                    p = k;
+
+        return numNorma / demNorma;
+    }
+
+    /**
+     * Metodo Jacobi para resolver sistemas lineares
+     * @author Samuel
+     */
+    public double[] jacobi(Matriz a, double b[], double toler, int maxInter) {
+
+        int n = a.getMatriz().length;
+        double A[][] = a.getMatriz();
+        double x[] = new double[n];
+        double novoX[] = new double[n];
+        int inter;
+        double normaRelativa = 0.0;
+        double soma = 0.0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    A[i][j] = A[i][j] / A[i][i];
                 }
             }
-            if (p != j) {
-                for (int k = 0; k < n; k++) {
-                    // Troca das linhas p e j
-                    t = A.matriz[j][k];
-                    A.matriz[j][k] = A.matriz[p][k];
-                    A.matriz[p][k] = t;
-                }
-                // Armazena permutas de b
-                m = pivot[j];
-                pivot[j] = pivot[p];
-                pivot[p] = m;
-            }
-            if (Math.abs(A.matriz[j][j]) != 0) {
-                for (int i = j + 1; i < n; i++) {
-                    // Pivoteamento por eliminacao de Gauss
-                    multiplicador = A.matriz[i][j] / A.matriz[j][j];
-                    A.matriz[i][j] = multiplicador;
-                    // Multiplicacao Mij
-                    for (int k = j + 1; k < n; k++) {
-                        A.matriz[i][k] = A.matriz[i][k] - (multiplicador * A.matriz[j][k]);
+            b[i] = b[i] / A[i][i];
+            x[i] = b[i];
+        }
+        inter = 0;
+        while ((normaRelativa <= toler) || (inter >= maxInter)) {
+            inter++;
+            for (int i = 0; i < n; i++) {
+                soma = 0.0;
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        soma = soma + A[i][j] * x[j];
                     }
                 }
+                novoX[i] = b[i] - soma;
             }
+            normaRelativa = calculaNormaRelativa(x, novoX, n);
+            x = novoX;
         }
-        return A;
+        return x;
     }
 
     /**
      * Passo 3: Computa vetor u
-     *
      * @author Diego
-     *
-     *
      */
-
-
-    public boolean computaVetorU() {
+    private boolean computaVetorU() {
 
         // Não chegamos em uma solucao ótima ainda.Alguma variável básica deve sair da base para dar
         // lugar a entrada de uma variável não básica.Computa 'u' para verificar se solucao é ilimitada
@@ -92,14 +100,14 @@ public class Simplex {
         // implementa
         double aux[] = new double[C];
 
-        Matriz m = new Matriz();
+        //Matriz m = new Matriz(null, c);   <-  tem methodo que retorna a matriz
 
         for (int i = 0; i < L; i++) {
-            aux[i] = m.matriz[i][jotaEscolhido];
+            //       aux[i] = m.matriz[i][jotaEscolhido];
         }
 
 
-        u =  m.matrixByVector(BMenosUm,aux);
+        //    u = Matriz.matrixByVector(BMenosUm, aux);
 
         // Verifica se nenhum componente de u e ' positivo
         boolean existePositivo = false;
@@ -123,7 +131,7 @@ public class Simplex {
      *
      * @author Diego
      */
-    public double calcTheta(double b[]) {
+    private double calcTheta(double b[]) {
 
         double theta = Double.POSITIVE_INFINITY;
         double indiceL = -1;
@@ -160,19 +168,19 @@ public class Simplex {
      * @author Diego
      *
      */
-    public void atualizaVBandNB() {
+    private void atualizaVBandNB() {
 
-        double theta = calcTheta()// implementar
+        // double theta = calcTheta();// implementar
 
         /*Calcula novo valor da nao-basica, e atualiza base8 */
         for (int i = 0; i < L; i++) {
 
             //Se encontramos o L-ésimo indica da variável básica que deixará a base, substitui-a
             //pela variável não-básica correspondente à j-ésima direção factível de redução de custo
-            if (indicesBase[i] == indiceL) {
-                x[i] = theta;
+            //   if (indicesBase[i] == indiceL) {
+            //       x[i] = theta;
                 indicesBase[i] = jotaEscolhido;
-            }
+            //   }
         }
 
         // Para as demais variáveis não básicas, apenas atualiza o índice de quem saiu da base (e
@@ -180,7 +188,7 @@ public class Simplex {
         for (int i = 0; i < C - L; i++) {
 
             if (indicesNaoBase[i] == jotaEscolhido) {
-                indicesNaoBase[i] = indiceL;
+                //     indicesNaoBase[i] = indiceL;
             }
         }
     }
@@ -192,9 +200,11 @@ public class Simplex {
      *
      *
      */
-    public void start(m,b,c) {
+    public void start(Matriz m, double b[], double c[]) {
         int iteracao = 0;
         boolean flag = true;
+
+
 
         while(true){
 
