@@ -76,7 +76,6 @@ public class Simplex {
             }
             x[i] = (b[i] - soma) / A[i][i];
         }
-
         return x;
     }
 
