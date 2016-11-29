@@ -85,6 +85,7 @@ public class Simplex {
             normaRelativa = calculaNormaRelativa(x, novoX, n);
             x = novoX;
         }
+        System.out.println(inter);
         return x;
     }
 
