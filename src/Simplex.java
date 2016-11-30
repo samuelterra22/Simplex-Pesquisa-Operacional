@@ -9,21 +9,19 @@ public class Simplex {
     private static double[][] BMenosUm;
     private static int[] indicesBase;
     private static int[] indicesNaoBase;
-    private static double[] u;
-    private static int jotaEscolhido;  //joTa
-    private int L;                // numero de linhas (M)
-    private int C;                // numero de colunas (N)
 
-    public Simplex(Matriz m, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
+    private static Matriz A;
+    private static Matriz B;
+    private static double[] b;
+    private static double[] c;
 
-        // inicializar todos os valores no contrutor, para usar no Main deve-se instanaciar um objeto Simplex
+    public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
-        BMenosUm = new double[L][L];
+        Simplex.A = new Matriz(A);
+        Simplex.b = b;
+        Simplex.c = c;
         Simplex.indicesBase = indicesNaoBase;
         Simplex.indicesNaoBase = indicesNaoBase;
-
-        u = new double[L];
-        jotaEscolhido = 0;  //joTa
     }
 
     /**
@@ -104,8 +102,26 @@ public class Simplex {
         return x;
     }
 
+    private Matriz calculaInversa() {
+
+        return null;
+    }
+
     /* Calculando SBF inicial */
     private void passo1() {
+
+        printVetor(indicesBase, "Indices basicos");
+        printVetor(indicesNaoBase, "Indices nao basicos");
+
+        B = new Matriz(A.getNumOfLinhas(), A.getNumOfLinhas()); // nova matriz B[m][m]
+
+
+        // Calcula a SBF inicial pelo produto da inversa de B com b
+        BMenosUm = calculaInversa(B);//solve(B);
+        x = BMenosUm.b;
+
+
+
 
     }
 

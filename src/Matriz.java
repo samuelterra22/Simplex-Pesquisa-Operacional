@@ -36,9 +36,10 @@ public class Matriz {
      * Inicializa matriz de acordo com um objeto ja pronto
      * @author Samuel
      */
-    private Matriz(Matriz A) {
+    public Matriz(Matriz A) {
         this(matriz);
     }
+
 
     /**
      * Cria e retorna uma matriz identidade
