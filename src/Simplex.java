@@ -6,14 +6,14 @@
 
 public class Simplex {
 
-    private static double[][] BMenosUm;
     private static int[] indicesBase;
     private static int[] indicesNaoBase;
-
+    private static Matriz BMenosUm;
     private static Matriz A;
     private static Matriz B;
     private static double[] b;
     private static double[] c;
+    private static double[] x;
 
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
@@ -102,13 +102,15 @@ public class Simplex {
         return x;
     }
 
-    private Matriz calculaInversa() {
+    private Matriz calculaInversa(Matriz B) {
+
+
 
         return null;
     }
 
     /* Calculando SBF inicial */
-    private void passo1() {
+    private void passo1(int iteracao) {
 
         printVetor(indicesBase, "Indices basicos");
         printVetor(indicesNaoBase, "Indices nao basicos");
@@ -118,9 +120,12 @@ public class Simplex {
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
         BMenosUm = calculaInversa(B);//solve(B);
-        x = BMenosUm.b;
+        x = BMenosUm.multVetor(b);
 
+        System.out.println("Base^-1:");
+        BMenosUm.show();
 
+        System.out.println("SBF # " + iteracao);
 
 
     }
@@ -151,7 +156,7 @@ public class Simplex {
         while (true) {
             System.out.println("Iteracao: " + iteracao);
             /* Calculando SBF inicial */
-            passo1();
+            passo1(iteracao);
 
             /* Calculando os custos reduzidos dos indices nao basicos */
             passo2();

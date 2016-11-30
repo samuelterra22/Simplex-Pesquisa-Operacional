@@ -54,29 +54,12 @@ public class Matriz {
     }
 
     /**
-     * Multiplicação matriz por vetor
-     * @author Diego
-     */
-    public double[] matrixByVector(double m[][], double v[]) {
-
-        double[] produto = new double[m[0].length];
-        double aux = 0;
-
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
-                aux = m[i][j] * v[j];
-            }
-            produto[i] = aux;
-            aux = 0;
-        }
-        return produto;
-    }
-
-    /**
      * Multiplicação  vetor por matriz
      * @author Diego
      */
-    public double[] matrixByVector(double v[], double m[][]) {
+    public double[] multVetor(double v[]) {
+
+        double m[][] = this.getMatriz();
 
         double[] produto = new double[m[0].length];
         double aux = 0;
