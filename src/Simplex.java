@@ -17,6 +17,9 @@ public class Simplex {
     private static double[] c;
     private static double[] x;
 
+    private static double objetivo;
+    private static double jEscolhido;
+
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         Simplex.A = new Matriz(A);
@@ -105,14 +108,21 @@ public class Simplex {
         return x;
     }
 
+    /**
+     * Metodo para calcular a inversa da matriz informada
+     *
+     * @author Samuel
+     */
     private Matriz calculaInversa(Matriz B) {
-
 
 
         return null;
     }
 
-    /* Calculando SBF inicial */
+    /**
+     * Calculando SBF inicial
+     * @author Samuel
+     */
     private void passo1(int iteracao) {
 
         printVetor(indicesBase, "Indices basicos");
@@ -120,37 +130,88 @@ public class Simplex {
 
         B = new Matriz(A.getNumOfLinhas(), A.getNumOfLinhas()); // nova matriz B[m][m]
 
-
+        // Copia as colunas que formam a base inicial
+        for (int i = 0; i < B.getNumOfLinhas(); i++) {
+            copiaColuna(B, A, indicesBase[i]);
+        }
+        
         // Calcula a SBF inicial pelo produto da inversa de B com b
         BMenosUm = calculaInversa(B);//solve(B);
         x = BMenosUm.multVetor(b);
 
+        // exibe a inversa da mase
         System.out.println("Base^-1:");
         BMenosUm.show();
 
+        // exibe a solucao basica factivel da iteracao corrente, apenas variaveis basicas
         System.out.println("SBF # " + iteracao);
+        for (int i = 0; i < indicesBase.length; i++) {
+            System.out.println("x[" + indicesBase[i] + "] = " + x[i]);
+        }
 
+        // exibe o valor da funcao objetivo
+        objetivo = 0.0;
+        for (int i = 0; i < indicesBase.length; i++) {
+            objetivo += c[indicesBase[i]] * x[i];
+        }
+        System.out.println("Valor da funcao objetivo: " + objetivo);
+    }
+
+    /**
+     * Calculando os custos reduzidos dos indices nao basicos
+     * Para cada indice nao base, calcula o custo reduzido correspondente
+     *
+     * @author Samuel
+     */
+    private void passo2(int iteracao) {
+
+        // Vetor de custo basico, i.e., parte de c que esta relacionado com as variaveis basicas atuais
+        double[] custoBase = new double[A.getNumOfLinhas()];
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+            custoBase[i] = c[indicesBase[i]];
+        }
+
+        // Exibe vetor de custo basico
+        System.out.println("Custo basico: ");
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+            System.out.print("c_B[" + indicesBase[i] + "] = " + custoBase[i]);
+        }
+
+        // Escolhe algum indice nao basico cujo custo reduzido he negativo. Dentre os negativos, escolhe 'mais negativo'
+        jEscolhido = -1;
+        double custoEscolhido = Double.MAX_VALUE;
+
+        for (int i = 0; i < indicesNaoBase.length; i++) {
+
+        }
 
     }
 
-    /* Calculando os custos reduzidos dos indices nao basicos */
-    private void passo2() {
-    }
-
-    /* Computa vetor u */
+    /**
+     * Computa vetor u
+     * @author Samuel
+     */
     private void passo3() {
     }
 
-    /* Determina o valor de Theta */
+    /**
+     * Determina o valor de Theta
+     * @author Samuel
+     */
     private void passo4() {
     }
 
-    /* Atualiza variavel basica e nao-basica */
+    /**
+     * Atualiza variavel basica e nao-basica
+     * @author Samuel
+     */
     private void passo5() {
     }
 
     /**
-     *    Inicia o programa com iteração 0
+     * Laco principal da aplicacao: executa os 5 passos propostos por Bertsimas e Tsiksiklis para realizar
+     * uma iteracao completa do metodo Simplex.
+     * @author Samuel
      */
     public void start() {
 
@@ -162,7 +223,7 @@ public class Simplex {
             passo1(iteracao);
 
             /* Calculando os custos reduzidos dos indices nao basicos */
-            passo2();
+            passo2(iteracao);
 
             /* Computa vetor u */
             passo3();

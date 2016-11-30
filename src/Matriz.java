@@ -95,7 +95,6 @@ public class Matriz {
 
     /**
      * Retorna o numero de linhas da matriz
-     *
      * @author Samuel
      */
     public int getNumOfLinhas() {
@@ -104,7 +103,6 @@ public class Matriz {
 
     /**
      * Retorna o numero de colunas da matriz
-     *
      * @author Samuel
      */
     public int getNumOfColunas() {
