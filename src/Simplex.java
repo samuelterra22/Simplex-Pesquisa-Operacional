@@ -206,7 +206,6 @@ public class Simplex {
                 System.out.println("Possue infinitas soluções");
                 return;
             }
-
             iteracao++;
         }
     }
