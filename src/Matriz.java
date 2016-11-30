@@ -206,9 +206,11 @@ public class Matriz {
      * @author Samuel
      */
     public double[] getColuna(int indice) {
+        double x[] = new double[L];
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < C; j++) {
-                matriz[i][j] = matriz[i][j];
+                if (j == indice)
+                    x[i] = matriz[i][j];
             }
         }
         return x;
