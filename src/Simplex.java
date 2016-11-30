@@ -77,6 +77,35 @@ public class Simplex {
     }
 
     /**
+     * Transpoe um vetor, retorna uma matriz Lx1
+     *
+     * @author Samuel
+     */
+    private Matriz t(double[] vetor) {
+
+        double[][] m = new double[vetor.length][1];
+
+        for (int i = 0; i < vetor.length; i++) {
+            m[i][1] = vetor[i];
+        }
+
+        return new Matriz(m);
+    }
+
+    /**
+     * Mutiplica vetor por escalar
+     *
+     * @author Samuel
+     */
+    private double[] multVetor(double[] vetor, double x) {
+        double[] mu = new double[vetor.length];
+        for (int i = 0; i < mu.length; i++) {
+            mu[i] = vetor[i] * x;
+        }
+        return mu;
+    }
+
+    /**
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
@@ -181,7 +210,16 @@ public class Simplex {
         jEscolhido = -1;
         double custoEscolhido = Double.MAX_VALUE;
 
-        for (int i = 0; i < indicesNaoBase.length; i++) {
+        for (int j = 0; j < indicesNaoBase.length; j++) {
+
+            // Calcula a j-esima direcao factivel pelo produto -B^{-1}A_j, apenas para debug
+            double[] direcao = BMenosUm.multVetor(A.getColuna(j));
+            direcao = multVetor(direcao, -1);
+
+            // Calcula o custo reduzido
+            // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
+            double[] A_j = A.getColuna(j);
+            double[] c = BMenosUm.mult(t(custoBase)).multVetor(A_j); /// ver isso aqui
 
         }
 

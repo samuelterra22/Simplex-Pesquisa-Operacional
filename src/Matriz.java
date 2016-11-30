@@ -178,12 +178,12 @@ public class Matriz {
      * @author Samuel
      */
     public Matriz transposta() {
-        Matriz A = new Matriz(C, L);
+        double[][] trans = new double[L][C];
         for (int i = 0; i < L; i++)
             for (int j = 0; j < C; j++) {
-                matriz[j][i] = matriz[i][j];
+                trans[j][i] = matriz[i][j];
             }
-        return A;
+        return new Matriz(trans);
     }
 
     /**
