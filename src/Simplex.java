@@ -27,6 +27,34 @@ public class Simplex {
     }
 
     /**
+     * Imprime vetor de inteiros informado
+     *
+     * @author Samuel
+     */
+    private void printVetor(int[] vetor, String label) {
+
+        System.out.print(label + " -> [ ");
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.print(vetor[i]);
+        }
+        System.out.println(" ]");
+    }
+
+    /**
+     * Imprime vetor de doubles informado
+     *
+     * @author Samuel
+     */
+    private void printVetor(double[] vetor, String label) {
+
+        System.out.print(label + " -> [ ");
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.printf("%9.2f ", vetor[i]);
+        }
+        System.out.println(" ]");
+    }
+
+    /**
      * Copia determinada coluna de uma matriz, pra outra
      *
      * @author Samuel
@@ -104,6 +132,7 @@ public class Simplex {
         int iteracao = 0;
 
         while (true) {
+            System.out.println("Iteracao: " + iteracao);
             /* Calculando SBF inicial */
             passo1();
 
