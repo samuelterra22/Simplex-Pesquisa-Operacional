@@ -6,6 +6,8 @@
 
 public class Simplex {
 
+    private static Matriz identidade;
+
     private static int[] indicesBase;
     private static int[] indicesNaoBase;
     private static Matriz BMenosUm;
@@ -22,6 +24,7 @@ public class Simplex {
         Simplex.c = c;
         Simplex.indicesBase = indicesNaoBase;
         Simplex.indicesNaoBase = indicesNaoBase;
+        identidade = Matriz.identidade(A.getNumOfLinhas());
     }
 
     /**
