@@ -106,6 +106,7 @@ public class Simplex {
 
     /* Calculando SBF inicial */
     private void passo1() {
+
     }
 
     /* Calculando os custos reduzidos dos indices nao basicos */
