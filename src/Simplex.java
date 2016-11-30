@@ -220,7 +220,6 @@ public class Simplex {
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
             double[] A_j = A.getColuna(j);
             double[] c = BMenosUm.mult(t(custoBase)).multVetor(A_j); /// ver isso aqui
-
         }
 
     }
