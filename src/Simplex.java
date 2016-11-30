@@ -7,14 +7,14 @@
 public class Simplex {
 
     private static double[][] BMenosUm;
-    private static double[] indicesBase;
-    private static double[] indicesNaoBase;
+    private static int[] indicesBase;
+    private static int[] indicesNaoBase;
     private static double[] u;
     private static int jotaEscolhido;  //joTa
     private int L;                // numero de linhas (M)
     private int C;                // numero de colunas (N)
 
-    public Simplex() {
+    public Simplex(Matriz m, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         // inicializar todos os valores no contrutor, para usar no Main deve-se instanaciar um objeto Simplex
 
@@ -22,8 +22,8 @@ public class Simplex {
         C = 13;     // numero de colunas (N)
 
         BMenosUm = new double[L][L];
-        indicesBase = new double[L];
-        indicesNaoBase = new double[C - L];
+        Simplex.indicesBase = indicesNaoBase;
+        Simplex.indicesNaoBase = indicesNaoBase;
 
         u = new double[L];
         jotaEscolhido = 0;  //joTa
@@ -102,24 +102,29 @@ public class Simplex {
     /**
      *    Inicia o programa com iteração 0
      */
-    public void start(Matriz m, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
+    public void start() {
 
         int iteracao = 0;
 
-        /* Calculando SBF inicial */
-        passo1();
+        while (true) {
+            /* Calculando SBF inicial */
+            passo1();
 
-        /* Calculando os custos reduzidos dos indices nao basicos */
-        passo2();
+            /* Calculando os custos reduzidos dos indices nao basicos */
+            passo2();
 
-        /* Computa vetor u */
-        passo3();
+            /* Computa vetor u */
+            passo3();
 
-        /* Determina o valor de Theta */
-        passo4();
+            /* Determina o valor de Theta */
+            passo4();
 
-        /* Atualiza variavel basica e nao-basica */
-        passo5();
+            /* Atualiza variavel basica e nao-basica */
+            passo5();
+
+
+            iteracao++;
+        }
 
     }
 }
