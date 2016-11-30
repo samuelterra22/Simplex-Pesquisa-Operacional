@@ -182,6 +182,7 @@ public class Simplex {
         double custoEscolhido = Double.MAX_VALUE;
 
         for (int i = 0; i < indicesNaoBase.length; i++) {
+
         }
 
     }
