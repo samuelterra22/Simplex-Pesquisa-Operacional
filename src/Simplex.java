@@ -30,16 +30,25 @@ public class Simplex {
     }
 
     /**
-     * Calcula norma relativa para metodo Jacobi
+     * Copia determinada coluna de uma matriz, pra outra
      *
      * @author Samuel
      */
-    private void copiaColuna(Matriz A, Matriz B) {
-        double x[] = new double[B.getNumOfLinhas()];
+    private Matriz copiaColuna(Matriz A, Matriz B, int indice) {
+        double x[] = B.getColuna(indice);
+        double aux[][] = B.getMatriz();
+
+        for (int i = 0; i < B.getNumOfLinhas(); i++) {
+            for (int j = 0; j < B.getNumOfColunas(); j++) {
+                if (j == indice)
+                    aux[i][j] = x[i];
+            }
+        }
+        return new Matriz(aux);
     }
 
     /**
-     * Metodo para realizar Aliminacao de Gauss para sistemas lineares
+     * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
     public double[] gauss(Matriz a, double b[]) {
