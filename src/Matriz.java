@@ -110,6 +110,24 @@ public class Matriz {
     }
 
     /**
+     * Retorna o numero de linhas da matriz
+     *
+     * @author Samuel
+     */
+    public int getNumOfLinhas() {
+        return this.L;
+    }
+
+    /**
+     * Retorna o numero de colunas da matriz
+     *
+     * @author Samuel
+     */
+    public int getNumOfColunas() {
+        return this.C;
+    }
+
+    /**
      * Compara matriz
      * @author Samuel
      */
@@ -201,7 +219,7 @@ public class Matriz {
     }
 
     /**
-     * Cria uma copia da matriz
+     * Retorna a coluna desejada da matriz da matriz
      *
      * @author Samuel
      */
