@@ -18,7 +18,11 @@ public class Simplex {
     private static double[] x;
 
     private static double objetivo;
-    private static double jEscolhido;
+    private static int jEscolhido;
+    private static double u[];
+    private static double theta;
+    private static int indiceL;
+
 
     public Simplex() {
     }
@@ -208,7 +212,7 @@ public class Simplex {
      *
      * @author Samuel
      */
-    private void passo2(int iteracao) {
+    private boolean passo2(int iteracao) {
 
         // Vetor de custo basico, i.e., parte de c que esta relacionado com as variaveis basicas atuais
         double[] custoBase = new double[A.getNumOfLinhas()];
@@ -266,17 +270,50 @@ public class Simplex {
 
                 System.out.println("\nObjetivo = " + valObjetivo + "(encontrado na " + iteracao + "a. iteracao)\n");
 
+                double[] solucao = new double[A.getNumOfColunas()];
+                for (int i = 0; i < A.getNumOfLinhas(); i++) {
+                    solucao[indicesBase[i]] = x[i];
+                }
+                for (int i = 0; i < A.getNumOfColunas(); i++) {
+                    System.out.println("x[" + i + "] = " + solucao[i]);
+                }
+                System.out.println("\n\n");
+                //
+                //
+                return (true);                                            /// VERIFICAR RETORNO
             }
-
         }
-
+        return true;
     }
 
     /**
      * Computa vetor u
      * @author Samuel
      */
-    private void passo3() {
+    private boolean passo3() {
+
+        //Exibe quem entra na base
+        System.out.println("Variavel Entra Base: x[" + jEscolhido + "]");
+
+        // Não chegamos em uma solucao otima ainda. Alguma variável basica deve sair da base para dar
+        // lugar a entrada de uma variavel não basica. Computa 'u' para verificar se solucao eh ilimitada
+
+        u = BMenosUm.multVetor(A.getColuna(jEscolhido));
+
+        // Verifica se nenhum componente de u he positivo
+        boolean existePositivo = false;
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+            if (u[i] > 0)
+                existePositivo = true;
+        }
+
+        // Testa. Se nao houver no vetor 'u' (sinal inverso da direcao factivel) nenhum componente
+        // positivo, eh porque o valor otimo eh - infinito.
+        if (!existePositivo) {
+            System.out.println("\n\nCusto Otimo = -Infinito");
+            return (false);                                                      // VERIFICAR RETORNO
+        }
+        return true;
     }
 
     /**
@@ -284,6 +321,28 @@ public class Simplex {
      * @author Samuel
      */
     private void passo4() {
+
+        // Chuta um valor alto para o theta, e vai reduzindo de acordo com a razao x_i / u_i
+        theta = Double.MAX_VALUE;
+        indiceL = -1;
+
+        // Varre indices basicos determinando o valor de theta que garante factibilidade
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+
+            // Calcula a razao
+            if (u[i] > 0) {
+                // Calcula a razao
+                double razao = x[i] / u[i];
+
+                // Atualiza a razao, pois encontramos um menor valor de theta
+                if (razao < theta) {
+                    theta = razao;
+                    indiceL = indicesBase[i];
+                }
+            }
+        }
+        // Exibe variavel que irá deixar a base
+        System.out.println("Variavel  Sai  Base: x[" + indiceL + "], Theta = " + theta);
     }
 
     /**
@@ -291,6 +350,25 @@ public class Simplex {
      * @author Samuel
      */
     private void passo5() {
+
+        // Calcula novo valor da nao-basica, e atualiza base
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+
+            // Se encontramos o L-esimo indica da variavel basica que deixara a base, substitui-a pela variavel
+            // nao-basica correspondente a j-esima direção factivel de reducao de custo
+            if (indicesBase[i] == indiceL) {
+                x[i] = theta;
+                indicesBase[i] = jEscolhido;
+            }
+        }
+
+        // Para as demais variaveis nao basicas, apenas atualiza o indice de quem saiu da base (e entrou no conjunto
+        // das nao-basicas
+        for (int i = 0; i < A.getNumOfColunas() - A.getNumOfLinhas(); i++) {
+            if (indicesNaoBase[i] == jEscolhido)
+                indicesNaoBase[i] = indiceL;
+        }
+
     }
 
     /**
@@ -298,9 +376,12 @@ public class Simplex {
      * uma iteracao completa do metodo Simplex.
      * @author Samuel
      */
-    public void start() {
+    public double[] start() {
 
         int iteracao = 0;
+        boolean checkPasso2 = true;
+        boolean checkPasso3 = true;
+
 
         while (true) {
             System.out.println("Iteracao: " + iteracao);
@@ -308,10 +389,10 @@ public class Simplex {
             passo1(iteracao);
 
             /* Calculando os custos reduzidos dos indices nao basicos */
-            passo2(iteracao);
+            checkPasso2 = passo2(iteracao);
 
             /* Computa vetor u */
-            passo3();
+            checkPasso3 = passo3();
 
             /* Determina o valor de Theta */
             passo4();
@@ -319,9 +400,12 @@ public class Simplex {
             /* Atualiza variavel basica e nao-basica */
             passo5();
 
-
             iteracao++;
-        }
 
+            if (!((checkPasso2) || (checkPasso3)))
+                break;
+
+        }
+        return x;
     }
 }
