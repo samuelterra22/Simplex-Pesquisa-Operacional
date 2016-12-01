@@ -61,7 +61,6 @@ public class Simplex {
         for (int i = 0; i < x2.length; i++) {
             soma += x1[0][i] * x2[i];
         }
-
         return soma;
     }
 

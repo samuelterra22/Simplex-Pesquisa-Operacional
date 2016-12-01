@@ -50,6 +50,6 @@ public class Main{
             double[] b = {320, 50, 30, 60, 50, 10, 20, 20, 30};
             double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
 
-
+            Simplex s = new Simplex();
         }
     }
