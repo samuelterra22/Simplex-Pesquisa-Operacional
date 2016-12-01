@@ -20,6 +20,9 @@ public class Simplex {
     private static double objetivo;
     private static double jEscolhido;
 
+    public Simplex() {
+    }
+
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         Simplex.A = new Matriz(A);
@@ -42,6 +45,22 @@ public class Simplex {
             System.out.print(vetor[i]);
         }
         System.out.println(" ]");
+    }
+
+    /**
+     * Multiplica dois vetores, sendo um em forma de matriz
+     *
+     * @author Samuel
+     */
+    public double multVetores(Matriz a, double[] x2) {
+
+        double[][] x1 = a.getMatriz();
+        double soma = 0;
+        for (int i = 0; i < x2.length; i++) {
+            soma += x1[0][i] * x2[i];
+        }
+
+        return soma;
     }
 
     /**
@@ -82,13 +101,10 @@ public class Simplex {
      * @author Samuel
      */
     private Matriz t(double[] vetor) {
-
         double[][] m = new double[vetor.length][1];
-
         for (int i = 0; i < vetor.length; i++) {
-            m[i][1] = vetor[i];
+            m[0][i] = vetor[i];
         }
-
         return new Matriz(m);
     }
 
@@ -218,8 +234,40 @@ public class Simplex {
 
             // Calcula o custo reduzido
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
-            double[] A_j = A.getColuna(j);
-            double[] c = BMenosUm.mult(t(custoBase)).multVetor(A_j); /// ver isso aqui
+
+            Matriz custoBaseTransposto = t(custoBase);                      // vetor de custo base transposto como uma matriz[L][1]
+            double[] BMenosUmXA_j = BMenosUm.multVetor(A.getColuna(j));     // BMenosUm * A[,j]
+            double result = multVetores(custoBaseTransposto, BMenosUmXA_j);
+            double custo = c[j] - result;
+
+            // Guarda um indice de direcao basica factivel com custo reduzido negativo, se houver
+            if (custo < 0) {
+                // Atualiza candidata a entrar na base
+                if (custo < custoEscolhido) {
+                    jEscolhido = j;
+                    custoEscolhido = custo;
+                }
+            }
+
+            // Exibe a j-esima direcao factivel
+            System.out.println("Direcao Factivel " + j + ", Custo Reduzido = " + custo);
+            for (int i = 0; i < A.getNumOfLinhas(); i++) {
+                System.out.println("d_B[" + indicesBase[i] + "] = " + direcao[i]);
+            }
+
+            // Se nao encontrou nenhum indice com custo reduzido negativo, he porque chegamos no otimo
+            if (jEscolhido == -1) {
+
+                // Exibe solucao ótima (apenas debug)
+                double valObjetivo = 0;
+                for (int i = 0; i < A.getNumOfLinhas(); i++) {
+                    valObjetivo += custoBase[i] * x[i];
+                }
+
+                System.out.println("\nObjetivo = " + valObjetivo + "(encontrado na " + iteracao + "a. iteracao)\n");
+
+            }
+
         }
 
     }
