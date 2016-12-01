@@ -34,6 +34,7 @@ public class Main{
 
         public static void main(String[]rgs){
 
+            /* Matriz A ja com valores de big M */
             double[][] a = {
                     {0, 4, 0.2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
                     {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
