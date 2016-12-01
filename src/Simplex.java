@@ -25,7 +25,7 @@ public class Simplex {
 
 
     public Simplex() {
-    }
+    } // contrutor vazio, tirar depois
 
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
@@ -39,7 +39,6 @@ public class Simplex {
 
     /**
      * Imprime vetor de inteiros informado
-     *
      * @author Samuel
      */
     private void printVetor(int[] vetor, String label) {
@@ -53,7 +52,6 @@ public class Simplex {
 
     /**
      * Multiplica dois vetores, sendo um em forma de matriz
-     *
      * @author Samuel
      */
     public double multVetores(Matriz a, double[] x2) {
@@ -69,7 +67,6 @@ public class Simplex {
 
     /**
      * Imprime vetor de doubles informado
-     *
      * @author Samuel
      */
     private void printVetor(double[] vetor, String label) {
@@ -83,7 +80,6 @@ public class Simplex {
 
     /**
      * Copia determinada coluna de uma matriz, pra outra
-     *
      * @author Samuel
      */
     private Matriz copiaColuna(Matriz A, Matriz B, int indice) {
@@ -101,7 +97,6 @@ public class Simplex {
 
     /**
      * Transpoe um vetor, retorna uma matriz Lx1
-     *
      * @author Samuel
      */
     private Matriz t(double[] vetor) {
@@ -114,7 +109,6 @@ public class Simplex {
 
     /**
      * Mutiplica vetor por escalar
-     *
      * @author Samuel
      */
     private double[] multVetor(double[] vetor, double x) {
@@ -159,7 +153,6 @@ public class Simplex {
 
     /**
      * Metodo para calcular a inversa da matriz informada
-     *
      * @author Samuel
      */
     private Matriz calculaInversa(Matriz B) {
@@ -209,7 +202,6 @@ public class Simplex {
     /**
      * Calculando os custos reduzidos dos indices nao basicos
      * Para cada indice nao base, calcula o custo reduzido correspondente
-     *
      * @author Samuel
      */
     private boolean passo2(int iteracao) {
