@@ -372,8 +372,8 @@ public class Simplex {
     }
 
     /**
-     * Laco principal da aplicacao: executa os 5 passos propostos por Bertsimas e Tsiksiklis para realizar
-     * uma iteracao completa do metodo Simplex.
+     * Laco principal da aplicacao: executa os 5 passos propostos por Bertsimas e Tsiksiklis
+     * para realizar uma iteracao completa do metodo Simplex.
      * @author Samuel
      */
     public double[] start() {
@@ -404,7 +404,6 @@ public class Simplex {
 
             if (!((checkPasso2) || (checkPasso3)))
                 break;
-
         }
         return x;
     }
