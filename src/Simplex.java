@@ -25,6 +25,7 @@ public class Simplex {
 
 
     public Simplex() {
+        identidade = Matriz.identidade(3);
     } // contrutor vazio, tirar depois
 
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
@@ -169,15 +170,24 @@ public class Simplex {
      * Metodo para calcular a inversa da matriz informada
      * @author Samuel
      */
-    private Matriz calculaInversa(Matriz B) {
+    public Matriz calculaInversa(Matriz Bx) {
 
-        Matriz inversa = new Matriz(A.getNumOfLinhas(), A.getNumOfLinhas());
+        Matriz inversaC = new Matriz(Bx.getNumOfLinhas(), Bx.getNumOfLinhas());
 
-        for (int i = 0; i <; i++) {
-            inversa = addCol(inversa, gauss(A, identidade.getColuna(i)), i);
-        }
+        //this.identidade = Matriz.identidade(B.getNumOfLinhas());
+        //identidade.show();
 
-        return inversa;
+        Bx.show();
+
+        // for (int i = 0; i <B.getNumOfColunas(); i++) {
+        //    double val[] = identidade.getColuna(i);
+
+        //printVetor(val,"val: ");
+
+        //inversa = addCol(inversa, gauss(B, val), i);
+        //}
+
+        return null;
     }
 
     /**

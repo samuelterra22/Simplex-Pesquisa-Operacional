@@ -228,8 +228,8 @@ public class Matriz {
      * @author Samuel
      */
     public void show() {
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
+        for (int i = 0; i < this.L; i++) {
+            for (int j = 0; j < this.C; j++) {
                 System.out.printf("%9.2f ", matriz[i][j]);
             }
             System.out.println();

@@ -52,6 +52,17 @@ public class Main{
 
             Simplex s = new Simplex();
 
+            double x[][] = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
+
+            Matriz X = new Matriz(x);
+
+            X.show();
+
+            Matriz inv = s.calculaInversa(X);
+
+            System.out.println();
+
+            //inv.show();
 
         }
     }
