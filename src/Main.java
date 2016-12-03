@@ -51,5 +51,6 @@ public class Main{
             double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
 
             Simplex s = new Simplex();
+
         }
     }
