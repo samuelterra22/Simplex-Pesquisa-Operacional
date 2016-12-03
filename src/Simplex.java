@@ -119,6 +119,21 @@ public class Simplex {
     }
 
     /**
+     * Metodo para adicionar uma coluna na posicao 'i' informada
+     *
+     * @author Samuel
+     */
+    private Matriz addCol(Matriz A, double[] coluna, int indice) {
+
+        double mat[][] = A.getMatriz();
+
+        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+            mat[i][indice] = coluna[i];
+        }
+        return new Matriz(mat);
+    }
+
+    /**
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
@@ -156,8 +171,13 @@ public class Simplex {
      */
     private Matriz calculaInversa(Matriz B) {
 
+        Matriz inversa = new Matriz(A.getNumOfLinhas(), A.getNumOfLinhas());
 
-        return null;
+        for (int i = 0; i <; i++) {
+            inversa = addCol(inversa, gauss(A, identidade.getColuna(i)), i);
+        }
+
+        return inversa;
     }
 
     /**

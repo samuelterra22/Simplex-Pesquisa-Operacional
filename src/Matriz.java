@@ -40,7 +40,6 @@ public class Matriz {
         this(matriz);
     }
 
-
     /**
      * Cria e retorna uma matriz identidade
      * @author Samuel
@@ -51,6 +50,9 @@ public class Matriz {
             matriz[i][i] = 1;
         }
         return I;
+    }
+
+    public void Matriz() {
     }
 
     /**
@@ -72,9 +74,6 @@ public class Matriz {
             aux = 0;
         }
         return produto;
-    }
-
-    public void Matriz() {
     }
 
     /**

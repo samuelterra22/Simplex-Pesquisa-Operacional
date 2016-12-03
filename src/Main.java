@@ -52,5 +52,6 @@ public class Main{
 
             Simplex s = new Simplex();
 
+
         }
     }
