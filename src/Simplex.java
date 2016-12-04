@@ -23,8 +23,6 @@ public class Simplex {
     private double theta;
     private int indiceL;
 
-    private Matriz A_Passo_1;
-
 
     /*public Simplex() {
         Matriz cu = new Matriz(0,0);
@@ -34,7 +32,6 @@ public class Simplex {
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         this.A = new Matriz(A);
-        this.A_Passo_1 = new Matriz(A);
         this.b = b;
         this.c = c;
         this.indicesBase = indicesBase;
@@ -59,6 +56,15 @@ public class Simplex {
     }
 
     /**
+     * So imprime uma mensagem
+     *
+     * @author Samuel
+     */
+    private void print(String msg) {
+        System.out.println(msg);
+    }
+
+    /**
      * Multiplica dois vetores, sendo um em forma de matriz
      * @author Samuel
      */
@@ -67,7 +73,7 @@ public class Simplex {
         double[][] x1 = a.getMatriz();
         double soma = 0;
         for (int i = 0; i < x2.length; i++) {
-            soma += x1[0][i] * x2[i];
+            soma += x1[i][0] * x2[i];
         }
         return soma;
     }
@@ -110,11 +116,13 @@ public class Simplex {
      */
     private Matriz t(double[] vetor) {
         double[][] m = new double[vetor.length][1];
+
         for (int i = 0; i < vetor.length; i++) {
-            m[0][i] = vetor[i];
+            m[i][0] = vetor[i];
         }
 
-        return new Matriz(m);
+        Matriz M = new Matriz(m);
+        return M;
     }
 
     /**
@@ -150,10 +158,11 @@ public class Simplex {
      */
     private double[] gauss(Matriz aa, double b[]) {
 
-        Matriz a = aa.copia();
+        double[][] mat = aa.getMatriz();
 
-        int n = a.getMatriz().length;
-        double A[][] = a.getMatriz();
+        final int n = mat.length;
+
+        double A[][] = aa.getMatriz();
         double mult = 0.0;
         double x[] = new double[n];
         double soma = 0.0;
@@ -188,7 +197,14 @@ public class Simplex {
 
         for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
 
-            inversa = addCol(inversa, gauss(Bx, this.identidade.getColuna(i)), i);
+            //Bx.show(); printVetor(this.identidade.getColuna(i),"linha da identidade");
+
+            double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));
+
+
+            //printVetor(resultGaus,"Resultado do gauss");
+
+            inversa = addCol(inversa, resultGaus, i);
         }
         return inversa;
     }
@@ -202,18 +218,20 @@ public class Simplex {
         printVetor(indicesBase, "Indices basicos");
         printVetor(indicesNaoBase, "Indices nao basicos");
 
+        B = null;
         B = new Matriz(M, M); // nova matriz B[m][m]
 
         // Copia as colunas que formam a base inicial
         for (int i = 0; i < B.getNumOfLinhas(); i++) {
-            B = copiaColuna(B, A, i, indicesBase[i]);
+            B = copiaColuna(B, A, i, indicesBase[i]);               /// olhar aqui
         }
 
-        A_Passo_1.show();
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
         BMenosUm = calculaInversa(B);//solve(B);
-        x = BMenosUm.multVetor(b);                                          //// parou aqui nessa merda
+
+
+        x = BMenosUm.multVetor(b);
 
         // exibe a inversa da mase
         System.out.println("Base^-1:");
@@ -240,7 +258,6 @@ public class Simplex {
      * @author Samuel
      */
     private boolean passo2(int iteracao) {
-
         // Vetor de custo basico, i.e., parte de c que esta relacionado com as variaveis basicas atuais
         double[] custoBase = new double[M];
 
@@ -258,23 +275,25 @@ public class Simplex {
         jEscolhido = -1;
         double custoEscolhido = Double.MAX_VALUE;
 
-        for (int j = 0; j < indicesNaoBase.length; j++) {
+        //for (int j = 0; j < indicesNaoBase.length; j++) {
+        for (int j : indicesNaoBase) {   // foreache
 
-            System.out.println(A.getNumOfLinhas());
+            System.out.println("Jota: "+j);
 
             printVetor(this.A.getColuna(j), "coluna a_j");
 
             // Calcula a j-esima direcao factivel pelo produto -B^{-1}A_j, apenas para debug
-            double[] direcao = BMenosUm.multVetor(A.getColuna(j));
+            double[] col_j = A.getColuna(j);
+            double[] direcao = BMenosUm.multVetor(col_j);
             direcao = multVetor(direcao, -1);
 
             // Calcula o custo reduzido
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
 
-            printVetor(custoBase, "Custo base: ");
-
             Matriz custoBaseTransposto = t(custoBase);                      // vetor de custo base transposto como uma matriz[L][1]
+
             double[] BMenosUmXA_j = BMenosUm.multVetor(A.getColuna(j));     // BMenosUm * A[,j]
+
             double result = multVetores(custoBaseTransposto, BMenosUmXA_j);
             double custo = c[j] - result;
 
@@ -299,7 +318,7 @@ public class Simplex {
                 // Exibe solucao ótima (apenas debug)
                 double valObjetivo = 0;
                 for (int i = 0; i < M; i++) {
-                    valObjetivo += custoBase[i] * x[i];
+                    valObjetivo += (custoBase[i] * x[i]);
                 }
 
                 System.out.println("\nObjetivo = " + valObjetivo + "(encontrado na " + iteracao + "a. iteracao)\n");
@@ -314,7 +333,7 @@ public class Simplex {
                 System.out.println("\n\n");
                 //
                 //
-                return (true);                                            /// VERIFICAR RETORNO
+                return (false);                                            /// VERIFICAR RETORNO
             }
         }
         return true;
@@ -423,20 +442,20 @@ public class Simplex {
             passo1(iteracao);
 
             /* Calculando os custos reduzidos dos indices nao basicos */
-            checkPasso2 = passo2(iteracao);
+            if (passo2(iteracao)) {
 
             /* Computa vetor u */
-            checkPasso3 = passo3();
+                if (passo3()) {
 
-            /* Determina o valor de Theta */
-            passo4();
+                    /* Determina o valor de Theta */
+                    passo4();
 
-            /* Atualiza variavel basica e nao-basica */
-            passo5();
+                    /* Atualiza variavel basica e nao-basica */
+                    passo5();
 
-            //iteracao++;
-
-            if (!((checkPasso2) || (checkPasso3)))
+                    iteracao++;
+                }
+            } else
                 break;
         }
         return x;

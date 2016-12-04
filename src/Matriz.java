@@ -4,7 +4,7 @@
 
 public class Matriz {
 
-    private double[][] matriz;        // vetor M-por-N que representa a matriz
+    private final double[][] matriz;        // vetor M-por-N que representa a matriz
     private int L;                    // numero de linhas (M)
     private int C;                    // numero de colunas (N)
 
@@ -38,7 +38,11 @@ public class Matriz {
      */
     public Matriz(Matriz A) {
 
-        this.matriz = A.getMatriz();
+        double[][] x = A.getMatriz();
+        this.L = x.length;
+        this.C = x[0].length;
+
+        this.matriz = x;
     }
 
     /**
@@ -62,16 +66,14 @@ public class Matriz {
      */
     public double[] multVetor(double v[]) {
 
-        Matriz g = this.copia();
-
-        double m[][] = g.getMatriz();
+        double m[][] = this.matriz;
 
         double[] produto = new double[m.length];
         double aux = 0;
 
         for (int i = 0; i < this.L; i++) {
             for (int j = 0; j < this.C; j++) {
-                aux = m[i][j] * v[j];
+                aux += (m[i][j] * v[j]);
             }
             produto[i] = aux;
             aux = 0;
