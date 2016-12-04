@@ -49,20 +49,13 @@ public class Main{
             double M = 100 * 320;
             double[] b = {320, 50, 30, 60, 50, 10, 20, 20, 30};
             double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
+            int[] indicesBase = {13, 14, 15, 16, 17, 18, 19, 20, 21};
+            int[] indicesNaoBase = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
-            Simplex s = new Simplex();
+            //  Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase)
+            Simplex s = new Simplex(A, b, c, indicesBase, indicesNaoBase);
 
-            double x[][] = {{12, 17, 9}, {0, 6, 8}, {21, 35, 11}};
-
-            Matriz X = new Matriz(x);
-
-            X.show();
-
-            Matriz inv = s.calculaInversa(X);
-
-            System.out.println();
-
-            //inv.show();
+            s.start();
 
         }
     }

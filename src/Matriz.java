@@ -4,7 +4,7 @@
 
 public class Matriz {
 
-    private static double[][] matriz;        // vetor M-por-N que representa a matriz
+    private double[][] matriz;        // vetor M-por-N que representa a matriz
     private int L;                    // numero de linhas (M)
     private int C;                    // numero de colunas (N)
 
@@ -26,10 +26,10 @@ public class Matriz {
     public Matriz(double[][] data) {
         this.L = data.length;
         this.C = data[0].length;
-        matriz = new double[L][C];
+        this.matriz = new double[L][C];
         for (int i = 0; i < L; i++)
             for (int j = 0; j < C; j++)
-                matriz[i][j] = data[i][j];
+                this.matriz[i][j] = data[i][j];
     }
 
     /**
@@ -37,19 +37,20 @@ public class Matriz {
      * @author Samuel
      */
     public Matriz(Matriz A) {
-        this(matriz);
+
+        this.matriz = A.getMatriz();
     }
 
     /**
      * Cria e retorna uma matriz identidade
      * @author Samuel
      */
-    public static Matriz identidade(int C) {
-        Matriz I = new Matriz(C, C);
+    public Matriz identidade(int C) {
+        double I[][] = new double[C][C];
         for (int i = 0; i < C; i++) {
-            matriz[i][i] = 1;
+            I[i][i] = 1;
         }
-        return I;
+        return new Matriz(I);
     }
 
     public void Matriz() {
@@ -61,13 +62,15 @@ public class Matriz {
      */
     public double[] multVetor(double v[]) {
 
-        double m[][] = this.getMatriz();
+        Matriz g = this.copia();
 
-        double[] produto = new double[m[0].length];
+        double m[][] = g.getMatriz();
+
+        double[] produto = new double[m.length];
         double aux = 0;
 
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
+        for (int i = 0; i < this.L; i++) {
+            for (int j = 0; j < this.C; j++) {
                 aux = m[i][j] * v[j];
             }
             produto[i] = aux;
@@ -81,12 +84,12 @@ public class Matriz {
      * @author Samuel
      */
     public Matriz soma(Matriz B) {
-        Matriz A = this;
+        Matriz A = this.copia();
         if (B.L != A.L || B.C != A.C) throw new RuntimeException("Dimensoes de matriz ilegais.");
-        Matriz C = new Matriz(L, this.C);
+        Matriz C = new Matriz(this.L, this.C);
         for (int i = 0; i < L; i++) {
             for (int j = 0; j < this.C; j++) {
-                matriz[i][j] = matriz[i][j] + matriz[i][j];
+                C.matriz[i][j] = this.matriz[i][j] + B.matriz[i][j];
             }
         }
         return C;
@@ -190,10 +193,10 @@ public class Matriz {
      * @author Samuel
      */
     public Matriz copia() {
-        Matriz A = new Matriz(L, C);
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
-                matriz[i][j] = matriz[i][j];
+        Matriz A = new Matriz(this.L, this.C);
+        for (int i = 0; i < this.L; i++) {
+            for (int j = 0; j < this.C; j++) {
+                A.matriz[i][j] = this.matriz[i][j];
             }
         }
         return A;
@@ -205,12 +208,9 @@ public class Matriz {
      * @author Samuel
      */
     public double[] getColuna(int indice) {
-        double x[] = new double[L];
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < C; j++) {
-                if (j == indice)
-                    x[i] = matriz[i][j];
-            }
+        double x[] = new double[this.L];
+        for (int i = 0; i < this.L; i++) {
+            x[i] = this.matriz[i][indice];
         }
         return x;
     }

@@ -6,36 +6,40 @@
 
 public class Simplex {
 
-    private static Matriz identidade;
+    private final int M;
+    private final int N;
+    private Matriz identidade;
+    private int[] indicesBase;
+    private int[] indicesNaoBase;
+    private Matriz BMenosUm;
+    private Matriz A;
+    private Matriz B;
+    private double[] b;
+    private double[] c;
+    private double[] x;
+    private double objetivo;
+    private int jEscolhido;
+    private double u[];
+    private double theta;
+    private int indiceL;
 
-    private static int[] indicesBase;
-    private static int[] indicesNaoBase;
-    private static Matriz BMenosUm;
-    private static Matriz A;
-    private static Matriz B;
-    private static double[] b;
-    private static double[] c;
-    private static double[] x;
 
-    private static double objetivo;
-    private static int jEscolhido;
-    private static double u[];
-    private static double theta;
-    private static int indiceL;
-
-
-    public Simplex() {
-        identidade = Matriz.identidade(3);
-    } // contrutor vazio, tirar depois
+    /*public Simplex() {
+        Matriz cu = new Matriz(0,0);
+        this.identidade = cu.identidade(3);
+    } // contrutor vazio, tirar depois*/
 
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
-        Simplex.A = new Matriz(A);
-        Simplex.b = b;
-        Simplex.c = c;
-        Simplex.indicesBase = indicesNaoBase;
-        Simplex.indicesNaoBase = indicesNaoBase;
-        identidade = Matriz.identidade(A.getNumOfLinhas());
+        this.A = new Matriz(A);
+        this.b = b;
+        this.c = c;
+        this.indicesBase = indicesBase;
+        this.indicesNaoBase = indicesNaoBase;
+        this.identidade = new Matriz(0, 0).identidade(A.getNumOfLinhas());
+
+        this.M = A.getNumOfLinhas();
+        this.N = A.getNumOfColunas();
     }
 
     /**
@@ -46,7 +50,7 @@ public class Simplex {
 
         System.out.print(label + " -> [ ");
         for (int i = 0; i < vetor.length; i++) {
-            System.out.print(vetor[i]);
+            System.out.print(" " + vetor[i] + " ");
         }
         System.out.println(" ]");
     }
@@ -73,7 +77,7 @@ public class Simplex {
 
         System.out.print(label + " -> [ ");
         for (int i = 0; i < vetor.length; i++) {
-            System.out.printf("%9.2f ", vetor[i]);
+            System.out.printf(" %9.2f ", vetor[i]);
         }
         System.out.println(" ]");
     }
@@ -82,17 +86,19 @@ public class Simplex {
      * Copia determinada coluna de uma matriz, pra outra
      * @author Samuel
      */
-    private Matriz copiaColuna(Matriz A, Matriz B, int indice) {
-        double x[] = B.getColuna(indice);
-        double aux[][] = B.getMatriz();
+    private Matriz copiaColuna(Matriz A, Matriz B, int destino, int indice) {
 
-        for (int i = 0; i < B.getNumOfLinhas(); i++) {
-            for (int j = 0; j < B.getNumOfColunas(); j++) {
-                if (j == indice)
-                    aux[i][j] = x[i];
+        double a[][] = A.getMatriz();
+        double b[][] = B.getMatriz();
+
+
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b.length; j++) {
+                a[i][destino] = b[i][indice];
+
             }
         }
-        return new Matriz(aux);
+        return new Matriz(a);
     }
 
     /**
@@ -104,6 +110,7 @@ public class Simplex {
         for (int i = 0; i < vetor.length; i++) {
             m[0][i] = vetor[i];
         }
+
         return new Matriz(m);
     }
 
@@ -138,7 +145,9 @@ public class Simplex {
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
-    public double[] gauss(Matriz a, double b[]) {
+    private double[] gauss(Matriz aa, double b[]) {
+
+        Matriz a = aa.copia();
 
         int n = a.getMatriz().length;
         double A[][] = a.getMatriz();
@@ -172,22 +181,13 @@ public class Simplex {
      */
     public Matriz calculaInversa(Matriz Bx) {
 
-        Matriz inversaC = new Matriz(Bx.getNumOfLinhas(), Bx.getNumOfLinhas());
+        Matriz inversa = new Matriz(Bx.getNumOfLinhas(), Bx.getNumOfLinhas());
 
-        //this.identidade = Matriz.identidade(B.getNumOfLinhas());
-        //identidade.show();
+        for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
 
-        Bx.show();
-
-        // for (int i = 0; i <B.getNumOfColunas(); i++) {
-        //    double val[] = identidade.getColuna(i);
-
-        //printVetor(val,"val: ");
-
-        //inversa = addCol(inversa, gauss(B, val), i);
-        //}
-
-        return null;
+            inversa = addCol(inversa, gauss(Bx, this.identidade.getColuna(i)), i);
+        }
+        return inversa;
     }
 
     /**
@@ -199,16 +199,18 @@ public class Simplex {
         printVetor(indicesBase, "Indices basicos");
         printVetor(indicesNaoBase, "Indices nao basicos");
 
-        B = new Matriz(A.getNumOfLinhas(), A.getNumOfLinhas()); // nova matriz B[m][m]
+        B = new Matriz(M, M); // nova matriz B[m][m]
 
         // Copia as colunas que formam a base inicial
         for (int i = 0; i < B.getNumOfLinhas(); i++) {
-            copiaColuna(B, A, indicesBase[i]);
+            B = copiaColuna(B, A, i, indicesBase[i]);
         }
-        
+
+
         // Calcula a SBF inicial pelo produto da inversa de B com b
         BMenosUm = calculaInversa(B);//solve(B);
         x = BMenosUm.multVetor(b);
+
 
         // exibe a inversa da mase
         System.out.println("Base^-1:");
@@ -216,16 +218,17 @@ public class Simplex {
 
         // exibe a solucao basica factivel da iteracao corrente, apenas variaveis basicas
         System.out.println("SBF # " + iteracao);
-        for (int i = 0; i < indicesBase.length; i++) {
+        for (int i = 0; i < M; i++) {                                 // indicesBase.length
             System.out.println("x[" + indicesBase[i] + "] = " + x[i]);
         }
 
         // exibe o valor da funcao objetivo
         objetivo = 0.0;
-        for (int i = 0; i < indicesBase.length; i++) {
+        for (int i = 0; i < M; i++) {                               //  indicesBase.length
             objetivo += c[indicesBase[i]] * x[i];
         }
         System.out.println("Valor da funcao objetivo: " + objetivo);
+
     }
 
     /**
@@ -236,15 +239,16 @@ public class Simplex {
     private boolean passo2(int iteracao) {
 
         // Vetor de custo basico, i.e., parte de c que esta relacionado com as variaveis basicas atuais
-        double[] custoBase = new double[A.getNumOfLinhas()];
-        for (int i = 0; i < A.getNumOfLinhas(); i++) {
-            custoBase[i] = c[indicesBase[i]];
+        double[] custoBase = new double[M];
+
+        for (int i = 0; i < M; i++) {
+            custoBase[i] = this.c[this.indicesBase[i]];
         }
 
         // Exibe vetor de custo basico
         System.out.println("Custo basico: ");
-        for (int i = 0; i < A.getNumOfLinhas(); i++) {
-            System.out.print("c_B[" + indicesBase[i] + "] = " + custoBase[i]);
+        for (int i = 0; i < M; i++) {
+            System.out.println("c_B[" + indicesBase[i] + "] = " + custoBase[i]);
         }
 
         // Escolhe algum indice nao basico cujo custo reduzido he negativo. Dentre os negativos, escolhe 'mais negativo'
@@ -253,12 +257,18 @@ public class Simplex {
 
         for (int j = 0; j < indicesNaoBase.length; j++) {
 
+            System.out.println(A.getNumOfLinhas());
+
+            printVetor(this.A.getColuna(j), "coluna a_j");
+
             // Calcula a j-esima direcao factivel pelo produto -B^{-1}A_j, apenas para debug
             double[] direcao = BMenosUm.multVetor(A.getColuna(j));
             direcao = multVetor(direcao, -1);
 
             // Calcula o custo reduzido
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
+
+            printVetor(custoBase, "Custo base: ");
 
             Matriz custoBaseTransposto = t(custoBase);                      // vetor de custo base transposto como uma matriz[L][1]
             double[] BMenosUmXA_j = BMenosUm.multVetor(A.getColuna(j));     // BMenosUm * A[,j]
@@ -276,7 +286,7 @@ public class Simplex {
 
             // Exibe a j-esima direcao factivel
             System.out.println("Direcao Factivel " + j + ", Custo Reduzido = " + custo);
-            for (int i = 0; i < A.getNumOfLinhas(); i++) {
+            for (int i = 0; i < M; i++) {
                 System.out.println("d_B[" + indicesBase[i] + "] = " + direcao[i]);
             }
 
@@ -285,17 +295,17 @@ public class Simplex {
 
                 // Exibe solucao ótima (apenas debug)
                 double valObjetivo = 0;
-                for (int i = 0; i < A.getNumOfLinhas(); i++) {
+                for (int i = 0; i < M; i++) {
                     valObjetivo += custoBase[i] * x[i];
                 }
 
                 System.out.println("\nObjetivo = " + valObjetivo + "(encontrado na " + iteracao + "a. iteracao)\n");
 
-                double[] solucao = new double[A.getNumOfColunas()];
-                for (int i = 0; i < A.getNumOfLinhas(); i++) {
+                double[] solucao = new double[N];
+                for (int i = 0; i < M; i++) {
                     solucao[indicesBase[i]] = x[i];
                 }
-                for (int i = 0; i < A.getNumOfColunas(); i++) {
+                for (int i = 0; i < N; i++) {
                     System.out.println("x[" + i + "] = " + solucao[i]);
                 }
                 System.out.println("\n\n");
@@ -323,7 +333,7 @@ public class Simplex {
 
         // Verifica se nenhum componente de u he positivo
         boolean existePositivo = false;
-        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+        for (int i = 0; i < M; i++) {
             if (u[i] > 0)
                 existePositivo = true;
         }
@@ -348,7 +358,7 @@ public class Simplex {
         indiceL = -1;
 
         // Varre indices basicos determinando o valor de theta que garante factibilidade
-        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+        for (int i = 0; i < M; i++) {
 
             // Calcula a razao
             if (u[i] > 0) {
@@ -373,7 +383,7 @@ public class Simplex {
     private void passo5() {
 
         // Calcula novo valor da nao-basica, e atualiza base
-        for (int i = 0; i < A.getNumOfLinhas(); i++) {
+        for (int i = 0; i < M; i++) {
 
             // Se encontramos o L-esimo indica da variavel basica que deixara a base, substitui-a pela variavel
             // nao-basica correspondente a j-esima direção factivel de reducao de custo
@@ -385,7 +395,7 @@ public class Simplex {
 
         // Para as demais variaveis nao basicas, apenas atualiza o indice de quem saiu da base (e entrou no conjunto
         // das nao-basicas
-        for (int i = 0; i < A.getNumOfColunas() - A.getNumOfLinhas(); i++) {
+        for (int i = 0; i < (N - M); i++) {
             if (indicesNaoBase[i] == jEscolhido)
                 indicesNaoBase[i] = indiceL;
         }
@@ -421,7 +431,7 @@ public class Simplex {
             /* Atualiza variavel basica e nao-basica */
             passo5();
 
-            iteracao++;
+            //iteracao++;
 
             if (!((checkPasso2) || (checkPasso3)))
                 break;
