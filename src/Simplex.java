@@ -23,6 +23,8 @@ public class Simplex {
     private double theta;
     private int indiceL;
 
+    private Matriz A_Passo_1;
+
 
     /*public Simplex() {
         Matriz cu = new Matriz(0,0);
@@ -32,6 +34,7 @@ public class Simplex {
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         this.A = new Matriz(A);
+        this.A_Passo_1 = new Matriz(A);
         this.b = b;
         this.c = c;
         this.indicesBase = indicesBase;
@@ -206,11 +209,11 @@ public class Simplex {
             B = copiaColuna(B, A, i, indicesBase[i]);
         }
 
+        A_Passo_1.show();
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
         BMenosUm = calculaInversa(B);//solve(B);
-        x = BMenosUm.multVetor(b);
-
+        x = BMenosUm.multVetor(b);                                          //// parou aqui nessa merda
 
         // exibe a inversa da mase
         System.out.println("Base^-1:");
