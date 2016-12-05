@@ -6,6 +6,8 @@
 
 public class Simplex {
 
+    private static final double EPSILON = 1e-10;
+
     private final int M;
     private final int N;
     private Matriz identidade;
@@ -168,145 +170,68 @@ public class Simplex {
         return new Matriz(mat);
     }
 
-    /**
-     * Metodo para realizar a troca de duas linhas durante o pivoteamento
-     *
-     * @author Samuel
-     */
-    private double[][] trocarLinhasMatriz(double[][] matA, int linha1, int linha2) {
-        double aux = 0.00;
-        double[][] a = copiarMatriz(matA);
-        int n = matA.length;
+    // Gaussian elimination with partial pivoting
+    public double[] solve(int indice) {
+        int N = B.getMatriz().length;
 
-        // Troca elementos das linhas na matriz: a
-        for (int i = 0; i < n; i++) {
-            aux = a[linha1][i];
-            a[linha1][i] = a[linha2][i];
-            a[linha2][i] = aux;
-        }
+        for (int p = 0; p < N; p++) {
 
-        return a;
-    }
-
-    /**
-     * Metodo para realizar a troca dos elementos do vetor b durante o pivoteamento
-     *
-     * @author Samuel
-     */
-    private double[] trocarLinhasB(double[] bb, int linha1, int linha2) {
-        double aux;
-        // Troca os elementos do vetor: b
-        aux = bb[linha1];
-        bb[linha1] = bb[linha2];
-        bb[linha2] = aux;
-
-        return bb;
-    }
-
-    /**
-     * Metodo para realizar Eliminacao de Gauss para sistemas lineares
-     * @author Samuel
-     */
-    public double[] gauss(Matriz aa, double bb[]) {
-
-        double[][] mat = aa.getMatriz();
-
-        final int n = mat.length;
-
-        double A[][] = mat;
-        double b[] = new double[bb.length];
-
-        System.arraycopy(bb, 0, b, 0, bb.length);
-
-        double mult = 0.0;
-        double x[] = new double[n];
-        double soma = 0.0;
-
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-
-                if (Math.abs(A[i][i]) < Math.abs(A[j][i])) {
-                    // Neste casó é necessário trocar as linhas k e i
-                    A = trocarLinhasMatriz(A, i, j);
-                    b = trocarLinhasB(b, i, j);
+            // find pivot row and swap
+            int max = p;
+            for (int i = p + 1; i < N; i++) {
+                if (Math.abs(B.getMatriz()[i][p]) > Math.abs(B.getMatriz()[max][p])) {
+                    max = i;
                 }
+            }
+            double[] temp = B.getMatriz()[p];
+            B.getMatriz()[p] = B.getMatriz()[max];
+            B.getMatriz()[max] = temp;
+            double t = identidade.getColuna(indice)[p];
+            identidade.getColuna(indice)[p] = identidade.getColuna(indice)[max];
+            identidade.getColuna(indice)[max] = t;
 
-                mult = A[j][i] / A[i][i];
-                A[j][i] = 0;
-                for (int k = i + 1; k < n; k++) {
-                    A[j][k] = -A[i][k] * mult + A[j][k];
+            // singular or nearly singular
+            if (Math.abs(B.getMatriz()[p][p]) <= EPSILON) {
+                throw new RuntimeException("Matrix is singular or nearly singular");
+            }
+
+            // pivot within A and b
+            for (int i = p + 1; i < N; i++) {
+                double alpha = B.getMatriz()[i][p] / B.getMatriz()[p][p];
+                identidade.getColuna(indice)[i] -= alpha * identidade.getColuna(indice)[p];
+                for (int j = p; j < N; j++) {
+                    B.getMatriz()[i][j] -= alpha * B.getMatriz()[p][j];
                 }
-                b[j] = -b[i] * mult + b[j];
             }
         }
-        x[n - 1] = b[n - 1] / A[n - 1][n - 1];
-        for (int i = n - 1; i >= 0; i--) {
-            soma = 0;
-            for (int j = i + 1; j < n; j++) {
-                soma = soma + A[i][j] * x[j];
+
+        // back substitution
+        double[] x = new double[N];
+        for (int i = N - 1; i >= 0; i--) {
+            double sum = 0.0;
+            for (int j = i + 1; j < N; j++) {
+                sum += B.getMatriz()[i][j] * x[j];
             }
-            x[i] = (b[i] - soma) / A[i][i];
+            x[i] = (identidade.getColuna(indice)[i] - sum) / B.getMatriz()[i][i];
         }
         return x;
     }
 
     /**
-     * Metodo para realizar Eliminacao de Gauss para sistemas lineares
-     * @author Samuel
-
-    private double[] gauss(Matriz aa, double bb[]) {
-
-    double[][] mat = aa.getMatriz();
-
-    final int n = mat.length;
-
-    double A[][] = mat;
-    double b[] = new double[bb.length];
-
-    System.arraycopy(bb, 0, b, 0, bb.length);
-
-    double mult = 0.0;
-    double x[] = new double[n];
-    double soma = 0.0;
-
-    for (int i = 0; i < n - 1; i++) {
-    for (int j = i + 1; j < n; j++) {
-    mult = A[j][i] / A[i][i];
-    for (int k = 0; k < n; k++) {
-    A[j][k] = -A[i][k] * mult + A[j][k];
-    }
-    b[j] = -b[i] * mult + b[j];
-    }
-    }
-    x[n - 1] = b[n - 1] / A[n - 1][n - 1];
-    for (int i = n - 1; i >= 0; i--) {
-    soma = 0;
-    for (int j = i + 1; j < n; j++) {
-    soma = soma + A[i][j] * x[j];
-    }
-    x[i] = (b[i] - soma) / A[i][i];
-    }
-    return x;
-    }
-*/
-    /**
      * Metodo para calcular a inversa da matriz informada
      * @author Samuel
      */
-    public Matriz calculaInversa(Matriz Bx) {
+    public Matriz calculaInversa() {
 
-        int BxL = Bx.getNumOfLinhas();
-        Matriz inversa = new Matriz(BxL, BxL);
+        Matriz inversa = new Matriz(M, M);
 
-        for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
-
-            // print("Bx: ");Bx.show();
-            //printVetor(this.identidade.getColuna(i), "linha da identidade");
-
-            double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));      // Erro do Gauss: ta fazendo divisao por zero na coluna 10
+        for (int i = 0; i < identidade.getNumOfColunas(); i++) {
 
 
-            printVetor(resultGaus, "Resultado do gauss");
+            double[] resultGaus = solve(i);      // Erro do Gauss: ta fazendo divisao por zero na coluna 10
+
+
+            //printVetor(resultGaus, "Resultado do gauss");
 
             inversa = addCol(inversa, resultGaus, i);
         }
@@ -323,6 +248,7 @@ public class Simplex {
         printVetor(indicesBase, "Indices basicos");
         printVetor(indicesNaoBase, "Indices nao basicos");
 
+        identidade = identidade.identidade(M);
         B = null;
         B = new Matriz(M, M); // nova matriz B[m][m]
 
@@ -333,7 +259,7 @@ public class Simplex {
 
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
-        BMenosUm = calculaInversa(B);//solve(B);                        PROBLEMA EM CALCULAR A INVERSA NA 3a ITERACAO
+        BMenosUm = calculaInversa();//solve(B);                        PROBLEMA EM CALCULAR A INVERSA NA 3a ITERACAO
 
 
         x = BMenosUm.multVetor(b);
