@@ -222,7 +222,7 @@ public class Matriz {
      * @author Samuel
      */
     public double[][] getMatriz() {
-        return matriz;
+        return this.matriz;
     }
 
     /**

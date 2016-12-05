@@ -193,7 +193,8 @@ public class Simplex {
      */
     public Matriz calculaInversa(Matriz Bx) {
 
-        Matriz inversa = new Matriz(Bx.getNumOfLinhas(), Bx.getNumOfLinhas());
+        int BxL = Bx.getNumOfLinhas();
+        Matriz inversa = new Matriz(BxL, BxL);
 
         for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
 
@@ -206,6 +207,7 @@ public class Simplex {
 
             inversa = addCol(inversa, resultGaus, i);
         }
+
         return inversa;
     }
 
@@ -277,8 +279,6 @@ public class Simplex {
 
         //for (int j = 0; j < indicesNaoBase.length; j++) {
         for (int j : indicesNaoBase) {   // foreache
-
-            System.out.println("Jota: "+j);
 
             printVetor(this.A.getColuna(j), "coluna a_j");
 
