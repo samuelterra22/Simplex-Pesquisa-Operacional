@@ -256,6 +256,7 @@ public class Simplex {
 
         x = BMenosUm.multVetor(b);
 
+
         // exibe a inversa da base
         System.out.println("Base^-1:");
         BMenosUm.show();
