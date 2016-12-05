@@ -138,8 +138,24 @@ public class Simplex {
     }
 
     /**
-     * Metodo para adicionar uma coluna na posicao 'i' informada
+     * Metodo para realizar a copia de uma matriz
      *
+     * @author Samuel
+     */
+    private double[][] copiarMatriz(double[][] a) {
+
+        double aux[][] = new double[a.length][a[0].length];
+
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                aux[i][j] = a[i][j];
+            }
+        }
+        return aux;
+    }
+
+    /**
+     * Metodo para adicionar uma coluna na posicao 'i' informada
      * @author Samuel
      */
     private Matriz addCol(Matriz A, double[] coluna, int indice) {
@@ -153,10 +169,45 @@ public class Simplex {
     }
 
     /**
+     * Metodo para realizar a troca de duas linhas durante o pivoteamento
+     *
+     * @author Samuel
+     */
+    private double[][] trocarLinhasMatriz(double[][] matA, int linha1, int linha2) {
+        double aux = 0.00;
+        double[][] a = copiarMatriz(matA);
+        int n = matA[0].length;
+
+        // Troca elementos das linhas na matriz: a
+        for (int i = 0; i < n; i++) {
+            aux = a[linha1][i];
+            a[linha1][i] = a[linha2][i];
+            a[linha2][i] = aux;
+        }
+
+        return a;
+    }
+
+    /**
+     * Metodo para realizar a troca dos elementos do vetor b durante o pivoteamento
+     *
+     * @author Samuel
+     */
+    private double[] trocarLinhasB(double[] bb, int linha1, int linha2) {
+        double aux;
+        // Troca os elementos do vetor: b
+        aux = bb[linha1];
+        bb[linha1] = bb[linha2];
+        bb[linha2] = aux;
+
+        return b;
+    }
+
+    /**
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
-    private double[] gauss(Matriz aa, double bb[]) {
+    public double[] gauss(Matriz aa, double bb[]) {
 
         double[][] mat = aa.getMatriz();
 
@@ -173,6 +224,13 @@ public class Simplex {
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
+
+                if (Math.abs(A[i][i]) < Math.abs(A[j][i])) {
+                    // Neste casó é necessário trocar as linhas k e i
+                    A = trocarLinhasMatriz(A, i, j);
+                    b = trocarLinhasB(b, i, j);
+                }
+
                 mult = A[j][i] / A[i][i];
                 for (int k = 0; k < n; k++) {
                     A[j][k] = -A[i][k] * mult + A[j][k];
@@ -192,6 +250,45 @@ public class Simplex {
     }
 
     /**
+     * Metodo para realizar Eliminacao de Gauss para sistemas lineares
+     * @author Samuel
+
+    private double[] gauss(Matriz aa, double bb[]) {
+
+    double[][] mat = aa.getMatriz();
+
+    final int n = mat.length;
+
+    double A[][] = mat;
+    double b[] = new double[bb.length];
+
+    System.arraycopy(bb, 0, b, 0, bb.length);
+
+    double mult = 0.0;
+    double x[] = new double[n];
+    double soma = 0.0;
+
+    for (int i = 0; i < n - 1; i++) {
+    for (int j = i + 1; j < n; j++) {
+    mult = A[j][i] / A[i][i];
+    for (int k = 0; k < n; k++) {
+    A[j][k] = -A[i][k] * mult + A[j][k];
+    }
+    b[j] = -b[i] * mult + b[j];
+    }
+    }
+    x[n - 1] = b[n - 1] / A[n - 1][n - 1];
+    for (int i = n - 1; i >= 0; i--) {
+    soma = 0;
+    for (int j = i + 1; j < n; j++) {
+    soma = soma + A[i][j] * x[j];
+    }
+    x[i] = (b[i] - soma) / A[i][i];
+    }
+    return x;
+    }
+*/
+    /**
      * Metodo para calcular a inversa da matriz informada
      * @author Samuel
      */
@@ -207,7 +304,6 @@ public class Simplex {
 
             double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));      // Erro do Gauss: ta fazendo divisao por zero na coluna 10
 
-            // link com a referenca da solucao ^^^ https://sites.google.com/site/programacaocpp/calculo-numerico/eliminacao-de-gauss-com-pivoteamento-parcial
 
             //printVetor(resultGaus,"Resultado do gauss");
 

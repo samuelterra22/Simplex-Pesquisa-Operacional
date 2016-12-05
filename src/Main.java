@@ -59,3 +59,5 @@ public class Main{
 
         }
     }
+
+// https://sites.google.com/site/programacaocpp/calculo-numerico/eliminacao-de-gauss-com-pivoteamento-parcial
