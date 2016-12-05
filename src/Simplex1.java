@@ -4,7 +4,7 @@
  */
 
 
-public class Simplex {
+public class Simplex1 {
 
     private final int M;
     private final int N;
@@ -29,7 +29,7 @@ public class Simplex {
         this.identidade = cu.identidade(3);
     } // contrutor vazio, tirar depois*/
 
-    public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
+    public Simplex1(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         this.A = new Matriz(A);
         this.b = b;
@@ -44,6 +44,7 @@ public class Simplex {
 
     /**
      * Imprime vetor de inteiros informado
+     *
      * @author Samuel
      */
     private void printVetor(int[] vetor, String label) {
@@ -66,6 +67,7 @@ public class Simplex {
 
     /**
      * Multiplica dois vetores, sendo um em forma de matriz
+     *
      * @author Samuel
      */
     public double multVetores(Matriz a, double[] x2) {
@@ -80,6 +82,7 @@ public class Simplex {
 
     /**
      * Imprime vetor de doubles informado
+     *
      * @author Samuel
      */
     private void printVetor(double[] vetor, String label) {
@@ -93,6 +96,7 @@ public class Simplex {
 
     /**
      * Copia determinada coluna de uma matriz, pra outra
+     *
      * @author Samuel
      */
     private Matriz copiaColuna(Matriz A, Matriz B, int destino, int indice) {
@@ -112,6 +116,7 @@ public class Simplex {
 
     /**
      * Transpoe um vetor, retorna uma matriz Lx1
+     *
      * @author Samuel
      */
     private Matriz t(double[] vetor) {
@@ -127,6 +132,7 @@ public class Simplex {
 
     /**
      * Mutiplica vetor por escalar
+     *
      * @author Samuel
      */
     private double[] multVetor(double[] vetor, double x) {
@@ -156,6 +162,7 @@ public class Simplex {
 
     /**
      * Metodo para adicionar uma coluna na posicao 'i' informada
+     *
      * @author Samuel
      */
     private Matriz addCol(Matriz A, double[] coluna, int indice) {
@@ -205,6 +212,7 @@ public class Simplex {
 
     /**
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
+     *
      * @author Samuel
      */
     public double[] gauss(Matriz aa, double bb[]) {
@@ -288,9 +296,10 @@ public class Simplex {
     }
     return x;
     }
-*/
+     */
     /**
      * Metodo para calcular a inversa da matriz informada
+     *
      * @author Samuel
      */
     public Matriz calculaInversa(Matriz Bx) {
@@ -316,6 +325,7 @@ public class Simplex {
 
     /**
      * Calculando SBF inicial
+     *
      * @author Samuel
      */
     private void passo1(int iteracao) {
@@ -360,6 +370,7 @@ public class Simplex {
     /**
      * Calculando os custos reduzidos dos indices nao basicos
      * Para cada indice nao base, calcula o custo reduzido correspondente
+     *
      * @author Samuel
      */
     private boolean passo2(int iteracao) {
@@ -444,6 +455,7 @@ public class Simplex {
 
     /**
      * Computa vetor u
+     *
      * @author Samuel
      */
     private boolean passo3() {
@@ -474,6 +486,7 @@ public class Simplex {
 
     /**
      * Determina o valor de Theta
+     *
      * @author Samuel
      */
     private void passo4() {
@@ -503,6 +516,7 @@ public class Simplex {
 
     /**
      * Atualiza variavel basica e nao-basica
+     *
      * @author Samuel
      */
     private void passo5() {
@@ -530,6 +544,7 @@ public class Simplex {
     /**
      * Laco principal da aplicacao: executa os 5 passos propostos por Bertsimas e Tsiksiklis
      * para realizar uma iteracao completa do metodo Simplex.
+     *
      * @author Samuel
      */
     public double[] start() {
