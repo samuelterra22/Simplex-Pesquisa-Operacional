@@ -1,10 +1,6 @@
-import Jama.Matrix;
-
 /**
  * Created by diego on 28/11/16.
- * Atualizado......
  */
-
 
 public class Simplex {
 
@@ -27,12 +23,6 @@ public class Simplex {
     private double theta;
     private int indiceL;
 
-
-    /*public Simplex() {
-        Matriz cu = new Matriz(0,0);
-        this.identidade = cu.identidade(3);
-    } // contrutor vazio, tirar depois*/
-
     public Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase) {
 
         this.A = new Matriz(A);
@@ -48,6 +38,8 @@ public class Simplex {
 
     /**
      * Imprime vetor de inteiros informado
+     * @param vetor   Vetor que deseja printar.
+     * @param label   Referencia do print.
      * @author Samuel
      */
     public void printVetor(int[] vetor, String label) {
@@ -61,7 +53,7 @@ public class Simplex {
 
     /**
      * So imprime uma mensagem
-     *
+     * @param msg   Mensagem a ser printada na tela
      * @author Samuel
      */
     private void print(String msg) {
@@ -70,6 +62,8 @@ public class Simplex {
 
     /**
      * Multiplica dois vetores, sendo um em forma de matriz
+     * @param a     Objeto do tipo Matriz
+     * @param x2    Vetor que ira multiplica a matriz
      * @author Samuel
      */
     public double multVetores(Matriz a, double[] x2) {
@@ -84,6 +78,8 @@ public class Simplex {
 
     /**
      * Imprime vetor de doubles informado
+     * @param vetor   Vetor que deseja printar.
+     * @param label   Referencia do print.
      * @author Samuel
      */
     public void printVetor(double[] vetor, String label) {
@@ -97,6 +93,10 @@ public class Simplex {
 
     /**
      * Copia determinada coluna de uma matriz, pra outra
+     * @param A         Matriz de destino
+     * @param B         Matriz de referencia
+     * @param destino   indice de destino
+     * @param indice    indice de referencia
      * @author Samuel
      */
     private Matriz copiaColuna(Matriz A, Matriz B, int destino, int indice) {
@@ -116,6 +116,7 @@ public class Simplex {
 
     /**
      * Transpoe um vetor, retorna uma matriz Lx1
+     * @param vetor     Vetor a ser transposto.
      * @author Samuel
      */
     private Matriz t(double[] vetor) {
@@ -131,6 +132,8 @@ public class Simplex {
 
     /**
      * Mutiplica vetor por escalar
+     * @param vetor     Vetor que ira ser multiplicado.
+     * @param x         Escalar
      * @author Samuel
      */
     private double[] multVetor(double[] vetor, double x) {
@@ -144,9 +147,11 @@ public class Simplex {
         return mu;
     }
 
-
     /**
-     * Metodo para adicionar uma coluna na posicao 'i' informada
+     * Metodo para adicionar uma coluna na posicao 'i' informada.
+     * @param A         Matriz que ira receber a coluna.
+     * @param coluna    Vetor contendo a coluna.
+     * @param  indice   Indice da coluna que onde ira ser adicionada.
      * @author Samuel
      */
     private Matriz addCol(Matriz A, double[] coluna, int indice) {
@@ -159,7 +164,13 @@ public class Simplex {
         return new Matriz(mat);
     }
 
-    public double[] solve(int indice) {
+    /**
+     * Metodo Gauss com pivoteamento para resolução de sistemas lineares
+     *
+     * @param indice Indice (iteracao) atual
+     * @author Samuel
+     */
+    public double[] solveGauss(int indice) {
         int N = B.getMatriz().length;
 
         for (int p = 0; p < N; p++) {
@@ -167,12 +178,12 @@ public class Simplex {
             int max = p;
             for (int i = p + 1; i < N; i++) {
                 if (Math.abs(B.getMatriz()[i][p]) > Math.abs(B.getMatriz()[max][p])) {
-                    print("Trocando linha " + p + " pela linha " + max);
                     max = i;
                 }
             }
 
             if (max != p) {
+                print("Trocando linha " + p + " pela linha " + max);
                 double[] temp = B.getMatriz()[p];
                 B.getMatriz()[p] = B.getMatriz()[max];
                 B.getMatriz()[max] = temp;
@@ -215,12 +226,7 @@ public class Simplex {
         Matriz inversa = new Matriz(M, M);
 
         for (int i = 0; i < identidade.getNumOfColunas(); i++) {
-
-            //print("Matriz B na com o Vetor"+i+" da identidade");
-            //B.show();
-            //printVetor(identidade.getColuna(i),"Coluna da identidade:");
-
-            double[] resultGauss = solve(i);
+            double[] resultGauss = solveGauss(i);
             inversa = addCol(inversa, resultGauss, i);
         }
 
@@ -229,6 +235,7 @@ public class Simplex {
 
     /**
      * Calculando SBF inicial
+     * @param iteracao    Indice (iteracao) atual
      * @author Samuel
      */
     private void passo1(int iteracao) {
@@ -249,10 +256,7 @@ public class Simplex {
         B.show();
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
-        //BMenosUm = calculaInversa();//solve(B);
-
-        Matrix c1 = new Matrix(B.getMatriz());
-        BMenosUm = new Matriz(c1.inverse().getArray());
+        BMenosUm = calculaInversa();//solve(B);
 
         x = BMenosUm.multVetor(b);
 
@@ -278,6 +282,7 @@ public class Simplex {
     /**
      * Calculando os custos reduzidos dos indices nao basicos
      * Para cada indice nao base, calcula o custo reduzido correspondente
+     * @param iteracao    Iteracao atual.
      * @author Samuel
      */
     private boolean passo2(int iteracao) {
@@ -306,10 +311,6 @@ public class Simplex {
             direcao = multVetor(direcao, -1);
 
             printVetor(col_j, "Culuna Aj: ");
-            print("Matriz b-1");
-            BMenosUm.show();
-
-            //printVetor(direcao,"Vetor direcao: ");
 
             // Calcula o custo reduzido
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
@@ -358,9 +359,8 @@ public class Simplex {
                     System.out.println("x[" + i + "] = " + solucao[i]);
                 }
                 System.out.println("\n\n");
-                //
-                //
-                return (false);                                            /// VERIFICAR RETORNO
+
+                return (false);
             }
         }
         return true;
@@ -391,7 +391,7 @@ public class Simplex {
         // positivo, eh porque o valor otimo eh - infinito.
         if (!existePositivo) {
             System.out.println("\n\nCusto Otimo = -Infinito");
-            return (false);                                                      // VERIFICAR RETORNO
+            return (false);
         }
         return true;
     }
@@ -482,6 +482,7 @@ public class Simplex {
             } else
                 break;
         }
+        printVetor(x, "X= ");
         return x;
     }
 }

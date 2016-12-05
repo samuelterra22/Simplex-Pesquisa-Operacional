@@ -9,8 +9,9 @@ public class Matriz {
     private int C;                    // numero de colunas (N)
 
     /**
-     * Inicializa uma matriz M por N de zeros
-     *
+     * Inicializa uma matriz M por N de zeros.
+     * @param L     Indicador do numero de linhas.
+     * @param C     Indicador do numero de colunas.
      * @author Samuel
      */
     public Matriz(int L, int C) {
@@ -21,6 +22,7 @@ public class Matriz {
 
     /**
      * Inicializa uma matriz baseada num vetor recebido por parametro
+     * @param data     Vetores de vetores doubles contendo os valores da matriz
      * @author Samuel
      */
     public Matriz(double[][] data) {
@@ -34,6 +36,7 @@ public class Matriz {
 
     /**
      * Inicializa matriz de acordo com um objeto ja pronto
+     * @param A     Objeto matriz ja referenciado
      * @author Samuel
      */
     public Matriz(Matriz A) {
@@ -62,6 +65,7 @@ public class Matriz {
 
     /**
      * Multiplicação  vetor por matriz
+     * @param v     Vetor que se deseja multiplicar
      * @author Diego
      */
     public double[] multVetor(double v[]) {
@@ -83,6 +87,7 @@ public class Matriz {
 
     /**
      * Realiza soma da matriz
+     * @param B     Matriz que se deseja somar
      * @author Samuel
      */
     public Matriz soma(Matriz B) {
@@ -115,6 +120,7 @@ public class Matriz {
 
     /**
      * Compara matriz
+     * @param B     Matriz que se deseja comparar
      * @author Samuel
      */
     public boolean igual(Matriz B) {
@@ -130,6 +136,7 @@ public class Matriz {
 
     /**
      * Realiza a subtracao de matriz
+     * @param B     Matriz que se deseja subtrair
      * @author Samuel
      */
     public Matriz menos(Matriz B) {
@@ -146,6 +153,7 @@ public class Matriz {
 
     /**
      * Realiza a multiplicacao de matriz
+     * @param B     Matriz que se deseja multiplicar
      * @author Samuel
      */
     public Matriz mult(Matriz B) {
@@ -164,6 +172,7 @@ public class Matriz {
 
     /**
      * Multiplica a matriz com um escalar
+     * @param escalar   Escalar que se quer multiplicar a matriz
      * @author Samuel
      */
     public Matriz multEscalar(double escalar) {
@@ -206,7 +215,7 @@ public class Matriz {
 
     /**
      * Retorna a coluna desejada da matriz da matriz
-     *
+     * @param indice  Indice da coluna que se quer obter
      * @author Samuel
      */
     public double[] getColuna(int indice) {
