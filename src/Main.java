@@ -33,7 +33,7 @@ public class Main{
 
         public static void main(String[]rgs){
 
-            /* Matriz A ja com valores de big M */
+            /* Matriz A ja com valores de big M *//*
             double[][] a = {
                     {0, 4, 0.2, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
                     {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -50,7 +50,23 @@ public class Main{
             double[] b = {320, 50, 30, 60, 50, 10, 20, 20, 30};
             double[] c = {-50, -190, -20, -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, M, M, M, M, M, M, M, M, M};
             int[] indicesBase = {13, 14, 15, 16, 17, 18, 19, 20, 21};
-            int[] indicesNaoBase = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+            int[] indicesNaoBase = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+
+            //  Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase)
+            Simplex s = new Simplex(A, b, c, indicesBase, indicesNaoBase);*/
+
+            /* Matriz A ja com valores de big M */
+            double[][] a = {
+                    {6, 4, 1, 0, 0, 0},
+                    {1, 2, 0, 1, 0, 0},
+                    {-1, 1, 0, 0, 1, 0},
+                    {0, 1, 0, 0, 0, 1}};
+
+            Matriz A = new Matriz(a);
+            double[] b = {24, 6, 1, 2};
+            double[] c = {-5, -4, 0, 0, 0, 0};
+            int[] indicesBase = {2, 3, 4, 5};
+            int[] indicesNaoBase = {0, 1};
 
             //  Simplex(Matriz A, double b[], double c[], int[] indicesBase, int[] indicesNaoBase)
             Simplex s = new Simplex(A, b, c, indicesBase, indicesNaoBase);
