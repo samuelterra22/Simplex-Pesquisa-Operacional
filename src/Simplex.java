@@ -50,7 +50,7 @@ public class Simplex {
      * Imprime vetor de inteiros informado
      * @author Samuel
      */
-    private void printVetor(int[] vetor, String label) {
+    public void printVetor(int[] vetor, String label) {
 
         System.out.print(label + " -> [ ");
         for (int i = 0; i < vetor.length; i++) {
@@ -86,7 +86,7 @@ public class Simplex {
      * Imprime vetor de doubles informado
      * @author Samuel
      */
-    private void printVetor(double[] vetor, String label) {
+    public void printVetor(double[] vetor, String label) {
 
         System.out.print(label + " -> [ ");
         for (int i = 0; i < vetor.length; i++) {
@@ -300,18 +300,19 @@ public class Simplex {
 
         for (int j : indicesNaoBase) {
 
-            printVetor(this.A.getColuna(j), "coluna a_j");
-
             // Calcula a j-esima direcao factivel pelo produto -B^{-1}A_j, apenas para debug
             double[] col_j = A.getColuna(j);
             double[] direcao = BMenosUm.multVetor(col_j);
             direcao = multVetor(direcao, -1);
 
-            printVetor(direcao, "Vetor direcao: ");
+            printVetor(col_j, "Culuna Aj: ");
+            print("Matriz b-1");
+            BMenosUm.show();
+
+            //printVetor(direcao,"Vetor direcao: ");
 
             // Calcula o custo reduzido
             // Custo = c[j] - t(CustoBase) %*% BMenosUm %*% A[,j];
-
             Matriz custoBaseTransposto = t(custoBase);                      // vetor de custo base transposto como uma matriz[L][1]
 
             double[] BMenosUmXA_j = BMenosUm.multVetor(A.getColuna(j));     // BMenosUm * A[,j]
@@ -319,8 +320,11 @@ public class Simplex {
             double result = multVetores(custoBaseTransposto, BMenosUmXA_j);
             double custo = c[j] - result;
 
+            print("Custo: " + custo);
+            print("Custo Escolhido: " + custoEscolhido);
+
             // Guarda um indice de direcao basica factivel com custo reduzido negativo, se houver
-            if (custo < 0) {
+            if (custo < 0.0) {
                 // Atualiza candidata a entrar na base
                 if (custo < custoEscolhido) {
                     jEscolhido = j;
@@ -341,6 +345,7 @@ public class Simplex {
                 double valObjetivo = 0;
                 for (int i = 0; i < M; i++) {
                     valObjetivo += (custoBase[i] * x[i]);
+                    //print(valObjetivo +"+="+custoBase[i] +" * "+x[i]);
                 }
 
                 System.out.println("\nObjetivo = " + valObjetivo + "(encontrado na " + iteracao + "a. iteracao)\n");
