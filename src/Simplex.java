@@ -198,7 +198,8 @@ public class Simplex {
 
         for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
 
-            //Bx.show(); printVetor(this.identidade.getColuna(i),"linha da identidade");
+            Bx.show();
+            printVetor(this.identidade.getColuna(i), "linha da identidade");
 
             double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));
 
@@ -432,9 +433,6 @@ public class Simplex {
     public double[] start() {
 
         int iteracao = 0;
-        boolean checkPasso2 = true;
-        boolean checkPasso3 = true;
-
 
         while (true) {
             System.out.println("Iteracao: " + iteracao);
