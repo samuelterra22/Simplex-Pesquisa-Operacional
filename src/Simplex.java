@@ -156,13 +156,17 @@ public class Simplex {
      * Metodo para realizar Eliminacao de Gauss para sistemas lineares
      * @author Samuel
      */
-    private double[] gauss(Matriz aa, double b[]) {
+    private double[] gauss(Matriz aa, double bb[]) {
 
         double[][] mat = aa.getMatriz();
 
         final int n = mat.length;
 
-        double A[][] = aa.getMatriz();
+        double A[][] = mat;
+        double b[] = new double[bb.length];
+
+        System.arraycopy(bb, 0, b, 0, bb.length);
+
         double mult = 0.0;
         double x[] = new double[n];
         double soma = 0.0;
@@ -198,10 +202,10 @@ public class Simplex {
 
         for (int i = 0; i < identidade.getNumOfColunas(); i++) {                     // Bx.getNumOfColunas()
 
-            Bx.show();
-            printVetor(this.identidade.getColuna(i), "linha da identidade");
+            // print("Bx: ");Bx.show();
+            //printVetor(this.identidade.getColuna(i), "linha da identidade");
 
-            double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));
+            double[] resultGaus = gauss(Bx, this.identidade.getColuna(i));      // Erro do Gauss: ta fazendo divisao por zero na coluna 10
 
 
             //printVetor(resultGaus,"Resultado do gauss");
