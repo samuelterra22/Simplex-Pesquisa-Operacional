@@ -230,7 +230,7 @@ public class Simplex {
 
 
         // Calcula a SBF inicial pelo produto da inversa de B com b
-        BMenosUm = calculaInversa(B);//solve(B);
+        BMenosUm = calculaInversa(B);//solve(B);                        PROBLEMA EM CALCULAR A INVERSA NA 3a ITERACAO
 
 
         x = BMenosUm.multVetor(b);
