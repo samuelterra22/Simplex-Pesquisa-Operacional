@@ -53,7 +53,6 @@ public class Main{
             // INICIA O SIMPLEX
             s.start();
 
-
 /*
             DEBUG - MODELO
 
